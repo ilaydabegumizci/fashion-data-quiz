@@ -1,0 +1,367 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fashion Data Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one stage card per screen; the team game puts the question left and a live scoreboard right, stacking on phones. */
+:root {
+  --bg: #FCFAFA; --surface: #FFFFFF; --sunk: #F0EAEA; --line: #D9CFD2;
+  --fg: #1D1D1B; --muted: #61615C;
+  --plum: #43123F; --mag: #7E0950; --lime: #C4C600; --orange: #EC940C; --red: #AF1E0B;
+  --ok: #2F7D3B; --ok-bg: #E4F2E4; --bad: #AF1E0B; --bad-bg: #F8E3DF;
+  --on-plum: #FFFFFF; --on-lime: #1D1D1B;
+  --display: "Tomorrow", "Arial Narrow", system-ui, sans-serif;
+  --body: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171014; --surface: #22181E; --sunk: #2D2128; --line: #47353F;
+  --fg: #F3ECEF; --muted: #B8A9B1;
+  --plum: #C98BC3; --mag: #E37BB5; --lime: #D6D84A; --orange: #F2AA3B; --red: #F07A66;
+  --ok: #7BCB86; --ok-bg: #1E3322; --bad: #F07A66; --bad-bg: #3B1E1A;
+  --on-plum: #171014; --on-lime: #171014; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #171014; --surface: #22181E; --sunk: #2D2128; --line: #47353F;
+  --fg: #F3ECEF; --muted: #B8A9B1;
+  --plum: #C98BC3; --mag: #E37BB5; --lime: #D6D84A; --orange: #F2AA3B; --red: #F07A66;
+  --ok: #7BCB86; --ok-bg: #1E3322; --bad: #F07A66; --bad-bg: #3B1E1A;
+  --on-plum: #171014; --on-lime: #171014; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 1rem; line-height: 1.5; padding-inline: 16px; padding-block: 20px 40px }
+.wrap { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.15 }
+.eyebrow { font-family: var(--display); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mag); font-weight: 700 }
+.muted { color: var(--muted) }
+button { font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: .65em 1.1em }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px }
+button.primary { background: var(--plum); color: var(--on-plum); border-color: var(--plum); font-weight: 600 }
+button.ghost { background: transparent }
+button:disabled { opacity: .45; cursor: default }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+
+/* Header */
+header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px; border-bottom: 2px solid var(--fg); padding-bottom: 12px }
+header.top h1 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 800 }
+header.top h1 span { color: var(--mag) }
+
+/* Start screen */
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px }
+.quizcard { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 12px; align-content: start }
+.quizcard h2 { font-size: 1.35rem }
+.quizcard .covers { font-size: .92rem }
+.quizcard .row button { flex: 1 1 140px }
+.modes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px }
+.mode { background: var(--sunk); border-radius: 8px; padding: 16px 18px; min-width: 0 }
+.mode h3 { font-size: 1rem; margin-bottom: 4px }
+.teamsetup { display: grid; gap: 10px }
+.teamsetup summary { cursor: pointer }
+button.small { font-size: .88rem; padding: .3em 0; border: 0; text-decoration: underline; text-underline-offset: 3px; color: var(--muted); justify-self: start }
+.join { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; background: var(--sunk); border-radius: 6px; padding: 10px 14px; font-weight: 600 }
+.join code { font-family: var(--display); font-size: 1.05rem; color: var(--mag) }
+.teamsetup .names { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px }
+.teamsetup input { font: inherit; width: 100%; padding: .5em .7em; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--fg) }
+
+/* Game */
+.game { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start }
+.solo .game { grid-template-columns: minmax(0, 1fr) }
+@media (max-width: 860px) { .game { grid-template-columns: minmax(0, 1fr) } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: clamp(18px, 3vw, 34px); display: grid; gap: 20px; min-width: 0 }
+.progress { display: flex; gap: 4px }
+.progress i { flex: 1; height: 6px; border-radius: 3px; background: var(--sunk) }
+.progress i.done { background: var(--mag) }
+.progress i.now { background: var(--orange) }
+.qmeta { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-variant-numeric: tabular-nums }
+.question { font-size: clamp(1.35rem, 2.8vw, 2.1rem); font-weight: 700 }
+.data { background: var(--sunk); border-radius: 6px; padding: 10px 14px; font-variant-numeric: tabular-nums; overflow-x: auto }
+.options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+@media (max-width: 600px) { .options { grid-template-columns: minmax(0, 1fr) } }
+.opt { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; text-align: left; padding: 14px 16px; font-size: clamp(1rem, 1.6vw, 1.2rem); border-width: 2px; min-height: 64px }
+.opt b { font-family: var(--display); display: inline-grid; place-items: center; width: 2.1em; height: 2.1em; border-radius: 50%; color: var(--on-plum) }
+.opt:nth-child(1) b { background: var(--plum) } .opt:nth-child(2) b { background: var(--mag) }
+.opt:nth-child(3) b { background: var(--red) } .opt:nth-child(4) b { background: var(--orange); color: var(--on-lime) }
+.opt.correct { border-color: var(--ok); background: var(--ok-bg) }
+.opt.wrong { border-color: var(--bad); background: var(--bad-bg) }
+.opt.dim { opacity: .5 }
+.opt-static { border: 2px solid var(--line); border-radius: 6px; background: var(--surface) }
+.opt:disabled { opacity: 1; cursor: default }
+.opt.dim:disabled { opacity: .5 }
+.feedback { border-radius: 8px; padding: 16px 18px; display: grid; gap: 6px }
+.feedback.ok { background: var(--ok-bg); border: 1px solid var(--ok) }
+.feedback.bad { background: var(--bad-bg); border: 1px solid var(--bad) }
+.feedback .verdict { font-family: var(--display); font-weight: 700; font-size: 1.1rem }
+.slideref { display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 600 }
+.slideref .num { white-space: nowrap; font-family: var(--display); background: var(--lime); color: var(--on-lime); border-radius: 4px; padding: .1em .5em }
+.timer { font-family: var(--display); font-size: 1.5rem; font-variant-numeric: tabular-nums; min-width: 3ch; text-align: right }
+.timer.low { color: var(--red) }
+
+/* Scoreboard */
+.board { background: var(--plum); color: var(--on-plum); border-radius: 8px; padding: 18px; display: grid; gap: 12px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px) }
+.board h3 { font-size: 1rem; letter-spacing: .12em; text-transform: uppercase }
+.board ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
+.board li { display: grid; grid-template-columns: 1.6em 1fr auto; gap: 8px; align-items: center; font-variant-numeric: tabular-nums }
+.board li .pts { font-family: var(--display); font-weight: 700; font-size: 1.2rem }
+.board .hint { font-size: .85rem; opacity: .85 }
+.award { display: grid; gap: 8px }
+.award .chips { display: flex; flex-wrap: wrap; gap: 8px }
+.chip { border-radius: 999px; padding: .45em 1em; border: 2px solid var(--line) }
+.chip[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); border-color: var(--lime); font-weight: 600 }
+
+/* Results */
+.podium { display: grid; gap: 10px }
+.podium .p { display: grid; grid-template-columns: 2.4em 1fr auto; gap: 12px; align-items: center; background: var(--sunk); border-radius: 8px; padding: 12px 16px; font-size: 1.15rem; font-variant-numeric: tabular-nums }
+.podium .p:first-child { background: var(--lime); color: var(--on-lime); font-size: 1.4rem }
+.podium .p .rank { font-family: var(--display); font-weight: 800 }
+.review { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none }
+.review li { background: var(--sunk); border-radius: 6px; padding: 10px 14px }
+footer { font-size: .85rem; color: var(--muted) }
+@media (prefers-reduced-motion: no-preference) { .opt, .chip { transition: background .15s, border-color .15s } }
+</style>
+
+</head><body><div class="wrap" id="app"></div>
+
+<script>
+const QUIZZES = {
+  q1: {
+    title: "Quiz break 1",
+    covers: "Week 1, Parts 1 to 6: intuition vs data, KPIs, the eight cases, the value chain and reading sales graphs.",
+    questions: [
+      { q: "Anna Wintour's first Vogue cover (1988) mixed couture with jeans. What did the data say before she ran it?",
+        o: ["Focus groups loved it", "Nothing: it was a decision by instinct", "Sales of jeans were exploding", "An algorithm suggested it"], a: 1,
+        why: "There was no spreadsheet or focus group. Even the printers asked if it was a mistake. Intuition can win, but it has limits.", s: 9, t: "Anna Wintour's first cover" },
+      { q: "What does Shein do first when it spots a new trend online?",
+        o: ["Produces 10,000 pieces for every store", "Waits for next season's runway", "Makes a small batch of about 100 to 200 pieces and watches the clicks", "Asks a magazine editor"], a: 2,
+        why: "Test small, then scale what sells. Customer behaviour decides the reorder within days.", s: 15, t: "Shein: test small, then scale" },
+      { q: "Which of these is a leading signal, one that appears before people buy?",
+        o: ["Returns", "Markdowns", "Sell-through", "Google searches"], a: 3,
+        why: "Searches, saves and wishlist adds come early but are noisy. Sales, sell-through, markdowns and returns are lagging signals.", s: 19, t: "Leading vs lagging signals" },
+      { q: "A linen shirt: 1,000 units received, 700 sold in 8 weeks. What is the sell-through rate?",
+        data: "Units received 1,000 · Units sold 700 · Sold at a discount 210 · Returned 84",
+        o: ["7%", "30%", "70%", "84%"], a: 2,
+        why: "Sell-through = units sold ÷ units received = 700 ÷ 1,000 = 70%.", s: 21, t: "Calculate it: the linen shirt" },
+      { q: "Which one is a vanity metric?",
+        o: ["Total followers", "Conversion rate by traffic source", "Units sold at full price", "Click-through to the product page"], a: 0,
+        why: "Ask: if this number moved, what would I do differently? For total followers, usually nothing.", s: 22, t: "Vanity vs actionable metrics" },
+      { q: "About 190,000 taste tests said people preferred New Coke. What did the data miss?",
+        o: ["The price of sugar", "People's emotional attachment to the original Coke", "That the sample was too small", "Competitor ads"], a: 1,
+        why: "The test measured the taste of one sip. People react to brand meaning. The original came back after 79 days.", s: 24, t: "New Coke (1985)" },
+      { q: "“The algorithm decides, people just follow the output.” What do we call this?",
+        o: ["Data-driven", "Data-controlled", "Data-informed", "Data literacy"], a: 1,
+        why: "Data-driven means data informs and people decide. Data-controlled means the spreadsheet decides.", s: 35, t: "Data-driven vs data-controlled" },
+      { q: "Return reasons such as “too small” flow back to which step of the value chain?",
+        o: ["Sourcing", "Distribution", "Design", "Marketing & CRM"], a: 2,
+        why: "After-sale data closes the loop: designers fix the fit, fabric or photos next time.", s: 47, t: "One chain, one flow of data" },
+      { q: "Site visits went from 50,000 to 100,000, and conversion fell from 3% to 1.5%. What happened to orders?",
+        data: "50,000 × 3% → 100,000 × 1.5%",
+        o: ["They doubled", "They stayed at 1,500", "They halved", "They rose by 50%"], a: 1,
+        why: "50,000 × 3% = 1,500 and 100,000 × 1.5% = 1,500. More traffic, same orders: check traffic quality and the site.", s: 51, t: "Traffic doubled. Orders didn't move." },
+      { q: "December sales are 50% lower than June. What is the fairest comparison?",
+        o: ["December vs last December", "December vs November", "December vs the best month ever", "No comparison needed"], a: 0,
+        why: "Compare like with like. Year over year, December was +15%: the business is growing.", s: 54, t: "Year over year beats month to month" },
+      { q: "A trench coat sells almost zero units in weeks 10 and 11. What should you check first?",
+        o: ["Whether the colour went out of fashion", "Whether it was out of stock", "Whether the logo changed", "Nothing: demand collapsed"], a: 1,
+        why: "Zero sales can mean zero stock. Demand did not disappear; check stock levels and “notify me” requests.", s: 55, t: "A spike, a dip and a gap" },
+      { q: "Revenue goes from €102k to €106k in six months. Chart A makes it look like a rocket. Why?",
+        o: ["Chart A uses fake data", "Chart A's axis starts at 100, not 0", "Chart A shows a different product", "Chart A is a bar chart"], a: 1,
+        why: "A cut axis makes +3.9% look huge. Always read the axis before the line.", s: 56, t: "Same data, two stories" },
+    ],
+  },
+  q2: {
+    title: "Quiz break 2",
+    covers: "Part 7, the marketer's job: the marketing map, metrics, the funnel, media reports and the ten places a marketer uses data.",
+    questions: [
+      { q: "Three Reel thumbnails get €300 each for 48 hours. How does the A/B test pick the winner?",
+        o: ["The designer's favourite", "The one with the best watch time gets the rest of the budget", "The cheapest to produce", "All three keep equal budget"], a: 1,
+        why: "Creative testing lets data compare versions with real viewers, then money follows the winner.", s: 64, t: "Asset production" },
+      { q: "A brand uploads its best 5,000 customers to an ad platform. What does the platform build?",
+        o: ["A look-alike audience of similar people", "A price list", "A trend forecast", "A new logo"], a: 0,
+        why: "Look-alike audiences find new people who resemble your best buyers.", s: 65, t: "Media & channels" },
+      { q: "A shopper saw TikTok, clicked a Google ad, then bought from an email. “Last click” gives 100% of the credit to…",
+        o: ["TikTok", "Google", "The email", "All three equally"], a: 2,
+        why: "Last-click attribution credits only the final touch, so it undervalues channels like TikTok that started the journey.", s: 66, t: "Measurement & reporting" },
+      { q: "In RFM segmentation, what do the letters stand for?",
+        o: ["Reach, Frequency, Mentions", "Recency, Frequency, Monetary value (spend)", "Return, Fit, Material", "Revenue, Followers, Margin"], a: 1,
+        why: "How recently, how often and how much a customer buys. VIP, regular, new and lapsed groups come from it.", s: 67, t: "Customer & CRM" },
+      { q: "An ad gets 2,000,000 impressions and reaches 800,000 people. What is the frequency?",
+        data: "Frequency = impressions ÷ reach",
+        o: ["0.4", "1.6", "2.5", "8"], a: 2,
+        why: "2,000,000 ÷ 800,000 = 2.5. Each person saw it about two and a half times.", s: 69, t: "Attention metrics" },
+      { q: "€8,000 of ads brought 240 orders. What is the CPA (cost per acquisition)?",
+        o: ["€0.53", "€3.00", "€33.33", "€90"], a: 2,
+        why: "CPA = spend ÷ orders = €8,000 ÷ 240 = €33.33.", s: 72, t: "What can we calculate from the funnel?" },
+      { q: "In the funnel, 7,200 people view a product and 720 add it to the cart. What should the marketer fix first?",
+        o: ["Buy more ads", "The product page: 90% leave there", "The checkout button colour", "Nothing, 10% is perfect"], a: 1,
+        why: "The leakiest step is product page to cart. Check size info, photos, reviews and price before buying more traffic.", s: 73, t: "Questions a marketer asks the funnel" },
+      { q: "Gross margin is 60%. Above which ROAS does the campaign start to make money?",
+        data: "Break-even ROAS = 1 ÷ margin",
+        o: ["0.6", "1.0", "1.67", "2.7"], a: 2,
+        why: "1 ÷ 0.6 = 1.67. Below that, ads cost more than the profit they bring.", s: 73, t: "Questions a marketer asks the funnel" },
+      { q: "Google search: €2,000 spend, 75 orders, €90 average order. What is its ROAS?",
+        data: "ROAS = revenue ÷ spend",
+        o: ["0.27", "1.35", "2.25", "3.38"], a: 3,
+        why: "75 × €90 = €6,750 revenue ÷ €2,000 = 3.38, the best of the three channels.", s: 74, t: "Three channels, one budget" },
+      { q: "A TikTok launch film has a ROAS of 1.1 but 3,200 mentions. Its goal was talkability. What do you do?",
+        o: ["Stop it: the ROAS is too low", "Judge it on reach, views and mentions instead", "Move all its budget to retargeting", "Ignore the report"], a: 1,
+        why: "Judge each campaign on its own goal. A talkability film is not a sales ad.", s: 75, t: "A real-looking media report" },
+      { q: "Sales rose 10% in cities with the campaign and 8% in similar cities without it. What is the real lift?",
+        o: ["About 2 points", "10%", "18%", "8%"], a: 0,
+        why: "Compare with a group that did not see the campaign: 10% − 8% ≈ 2 points of real effect.", s: 85, t: "Campaign success" },
+    ],
+  },
+};
+
+const PTS = 100;
+const SITE_URL = "ilaydabegumizci.github.io/fashion-data-quiz"; // public address students open, shown on the projector
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("fdq") || "null") } catch { return null } },
+  set(v) { try { localStorage.setItem("fdq", JSON.stringify(v)) } catch {} },
+};
+
+let S = { view: "start", quiz: "q1", mode: null, i: 0, revealed: false, picked: null, teams: ["Team A", "Team B", "Team C", "Team D"], scores: [], awarded: [], solo: [], timer: 30 };
+const saved = store.get();
+if (saved && saved.view === "game" && (saved.mode === "team" || saved.mode === "present")) S = { ...S, ...saved };
+let tick = null, left = 0;
+
+function save() { store.set(S) }
+function go(patch) { Object.assign(S, patch); save(); render() }
+
+function header() {
+  return `<header class="top"><div><div class="eyebrow">Fashion Data Science · Week 1</div><h1>Fashion Data <span>Quiz</span></h1></div>
+  ${S.view !== "start" ? `<button class="ghost" id="home">Back to start</button>` : `<div class="muted">For the projector or for review at home</div>`}</header>`;
+}
+
+function startView() {
+  const cards = Object.entries(QUIZZES).map(([k, z]) => `
+    <section class="quizcard"><div class="eyebrow">${z.questions.length} questions</div><h2>${esc(z.title)}</h2>
+    <p class="covers muted" style="margin:0">${esc(z.covers)}</p>
+    <div class="row"><button class="primary" data-start="${k}" data-mode="present">Present to the class</button><button data-start="${k}" data-mode="solo">Play on my phone</button></div>
+    <button class="ghost small" data-start="${k}" data-mode="team">Or play as teams with a scoreboard</button></section>`).join("");
+  return `${header()}
+  <div class="choices">${cards}</div>
+  <div class="modes">
+    <div class="mode"><h3>Present to the class</h3><p class="muted" style="margin:0">Put this page on the projector or share your screen. You show one question at a time and reveal the answer when everyone is ready.</p></div>
+    <div class="mode"><h3>Play on my phone</h3><p class="muted" style="margin:0">Each student, in the room or online, answers on their own phone at the same time. Feedback is instant and private, and the end screen lists the slides to revisit.</p></div>
+  </div>
+  <details class="quizcard teamsetup"><summary><b>Settings</b> <span class="muted">timer, and team names for the team game</span></summary>
+    <div class="names">${S.teams.map((n, i) => `<input id="team-${i}" value="${esc(n)}" aria-label="Team ${i + 1} name">`).join("")}</div>
+    <div class="row"><button id="addteam" ${S.teams.length >= 8 ? "disabled" : ""}>Add a team</button><button id="delteam" ${S.teams.length <= 2 ? "disabled" : ""}>Remove last team</button>
+    <label class="row muted" for="timer">Timer per question
+      <select id="timer" style="font:inherit;padding:.4em;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg)">
+        ${[0, 20, 30, 45].map((t) => `<option value="${t}" ${S.timer === t ? "selected" : ""}>${t ? t + " seconds" : "No timer"}</option>`).join("")}
+      </select></label></div></details>
+  <footer>Answers point to slide numbers in the revised Week 1 deck.</footer>`;
+}
+
+function progressBar(z) {
+  return `<div class="progress" aria-hidden="true">${z.questions.map((_, k) => `<i class="${k < S.i ? "done" : k === S.i ? "now" : ""}"></i>`).join("")}</div>`;
+}
+
+function board() {
+  const order = S.teams.map((n, k) => ({ n, p: S.scores[k] || 0 })).sort((a, b) => b.p - a.p);
+  return `<aside class="board" aria-live="polite"><h3>Scoreboard</h3><ol>${order.map((t, r) => `<li><span>${r + 1}</span><span>${esc(t.n)}</span><span class="pts">${t.p}</span></li>`).join("")}</ol>
+  <div class="hint">${PTS} points per correct answer.</div></aside>`;
+}
+
+function gameView() {
+  const z = QUIZZES[S.quiz], q = z.questions[S.i], team = S.mode === "team" || S.mode === "present", scoring = S.mode === "team";
+  const answered = team ? S.revealed : S.picked !== null;
+  const opts = q.o.map((t, k) => {
+    let cls = "opt";
+    if (answered) cls += k === q.a ? " correct" : (!team && k === S.picked ? " wrong" : " dim");
+    return team ? `<div class="${cls} opt-static"><b>${"ABCD"[k]}</b><span>${esc(t)}</span></div>`
+      : `<button class="${cls}" data-opt="${k}" ${answered ? "disabled" : ""}><b>${"ABCD"[k]}</b><span>${esc(t)}</span></button>`;
+  }).join("");
+  let fb = "";
+  if (answered) {
+    const right = team || S.picked === q.a;
+    fb = `<div class="feedback ${right ? "ok" : "bad"}"><div class="verdict">${team ? "Answer: " + "ABCD"[q.a] : right ? "Correct" : "Not quite. The answer is " + "ABCD"[q.a]}</div>
+      <div>${esc(q.why)}</div>
+      <div class="slideref">${right && !team ? "Covered on" : "Go back to"} <span class="num">Slide ${q.s}</span> ${esc(q.t)}</div></div>`;
+  }
+  const award = scoring && S.revealed ? `<div class="award"><div class="muted">Tap the teams that got it right:</div><div class="chips">${S.teams.map((n, k) => `<button class="chip" data-award="${k}" aria-pressed="${(S.awarded[S.i] || []).includes(k)}">${esc(n)}</button>`).join("")}</div></div>` : "";
+  const last = S.i === z.questions.length - 1;
+  const ctrl = team
+    ? (S.revealed ? `<button class="primary" id="next">${last ? "See the final scores" : "Next question"}</button>` : `<button class="primary" id="reveal">Reveal the answer</button>`)
+    : (answered ? `<button class="primary" id="next">${last ? "See my result" : "Next question"}</button>` : `<span class="muted">Tap an answer.</span>`);
+  return `${header()}<div class="game"><section class="stage">
+    ${progressBar(z)}
+    <div class="qmeta"><span class="eyebrow">${esc(z.title)} · Question ${S.i + 1} of ${z.questions.length}</span>${team && S.timer && !S.revealed ? `<span class="timer" id="clock">${S.timer}</span>` : ""}</div>
+    <h2 class="question">${esc(q.q)}</h2>
+    ${q.data ? `<div class="data">${esc(q.data)}</div>` : ""}
+    <div class="options">${opts}</div>${fb}${award}
+    ${S.mode === "present" && SITE_URL ? `<div class="join"><span>Answer on your phone:</span><code>${esc(SITE_URL)}</code><span class="muted">→ ${esc(z.title)} → Play on my phone</span></div>` : ""}
+    <div class="row">${ctrl}</div></section>${scoring ? board() : ""}</div>`;
+}
+
+function resultView() {
+  const z = QUIZZES[S.quiz];
+  if (S.mode === "present") {
+    return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Finished</div><h2 class="question">Check your score on your phone</h2>
+      <p style="margin:0">Your result screen lists the slides to revisit. Your score is only visible to you.</p>
+      <div class="row"><button class="primary" id="home2">Back to start</button></div></section>`;
+  }
+  if (S.mode === "team") {
+    const order = S.teams.map((n, k) => ({ n, p: S.scores[k] || 0 })).sort((a, b) => b.p - a.p);
+    return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Final scores</div><h2 class="question">${esc(order[0].n)} wins</h2>
+      <div class="podium">${order.map((t, r) => `<div class="p"><span class="rank">${r + 1}</span><span>${esc(t.n)}</span><span>${t.p} pts</span></div>`).join("")}</div>
+      <div class="row"><button class="primary" id="home2">Back to start</button></div></section>`;
+  }
+  const wrong = z.questions.map((q, k) => ({ q, ok: S.solo[k] === q.a })).filter((x) => !x.ok);
+  const score = z.questions.length - wrong.length;
+  return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Your result</div>
+    <h2 class="question">${score} of ${z.questions.length} correct</h2>
+    ${wrong.length ? `<p style="margin:0">Go back to these slides before next week:</p><ul class="review">${wrong.map((x) => `<li><span class="slideref"><span class="num">Slide ${x.q.s}</span> ${esc(x.q.t)}</span></li>`).join("")}</ul>` : `<p style="margin:0">All correct. You are ready for the next part.</p>`}
+    <div class="row"><button class="primary" id="again">Try again</button><button id="home2">Back to start</button></div></section>`;
+}
+
+function startClock() {
+  clearInterval(tick);
+  if (S.view !== "game" || S.mode === "solo" || !S.timer || S.revealed) return;
+  left = S.timer;
+  tick = setInterval(() => {
+    left -= 1; const c = $("#clock");
+    if (c) { c.textContent = Math.max(left, 0); c.classList.toggle("low", left <= 5) }
+    if (left <= 0) { clearInterval(tick); go({ revealed: true }) }
+  }, 1000);
+}
+
+function render() {
+  const app = $("#app");
+  app.innerHTML = S.view === "start" ? startView() : S.view === "game" ? gameView() : resultView();
+  document.body.classList.toggle("solo", S.mode !== "team");
+  if (S.view === "game" && !S.revealed && S.picked === null) startClock(); else clearInterval(tick);
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  const z = QUIZZES[S.quiz];
+  if (b.dataset.start) {
+    S.teams = S.teams.map((n, i) => ($("#team-" + i)?.value || "").trim() || n);
+    go({ view: "game", quiz: b.dataset.start, mode: b.dataset.mode, i: 0, revealed: false, picked: null, scores: S.teams.map(() => 0), awarded: [], solo: [] });
+  } else if (b.id === "home" || b.id === "home2") go({ view: "start", mode: null });
+  else if (b.id === "addteam") { S.teams = S.teams.map((n, i) => $("#team-" + i)?.value || n); go({ teams: [...S.teams, "Team " + "ABCDEFGH"[S.teams.length]] }) }
+  else if (b.id === "delteam") { S.teams = S.teams.map((n, i) => $("#team-" + i)?.value || n); go({ teams: S.teams.slice(0, -1) }) }
+  else if (b.id === "reveal") go({ revealed: true });
+  else if (b.dataset.award !== undefined) {
+    const k = +b.dataset.award, got = new Set(S.awarded[S.i] || []);
+    got.has(k) ? got.delete(k) : got.add(k);
+    const awarded = [...S.awarded]; awarded[S.i] = [...got];
+    const scores = S.teams.map((_, t) => awarded.reduce((sum, a) => sum + ((a || []).includes(t) ? PTS : 0), 0));
+    go({ awarded, scores });
+  } else if (b.dataset.opt !== undefined && S.mode === "solo" && S.picked === null) {
+    const solo = [...S.solo]; solo[S.i] = +b.dataset.opt; go({ picked: +b.dataset.opt, solo });
+  } else if (b.id === "next") {
+    if (S.i < z.questions.length - 1) go({ i: S.i + 1, revealed: false, picked: null });
+    else go({ view: "result" });
+  } else if (b.id === "again") go({ view: "game", i: 0, picked: null, solo: [] });
+});
+document.addEventListener("change", (e) => { if (e.target.id === "timer") go({ timer: +e.target.value }) });
+document.addEventListener("input", (e) => { const m = e.target.id.match(/^team-(\d)$/); if (m) { S.teams[+m[1]] = e.target.value; save() } });
+document.addEventListener("keydown", (e) => {
+  if (S.view !== "game" || e.target.tagName === "INPUT") return;
+  if (e.key === " " || e.key === "Enter") { const btn = $("#reveal") || $("#next"); if (btn && document.activeElement === document.body) { e.preventDefault(); btn.click() } }
+});
+render();
+</script>
+</body></html>
