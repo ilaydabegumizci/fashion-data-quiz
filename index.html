@@ -125,88 +125,543 @@ const QUIZZES = {
     title: "Quiz break 1",
     covers: "Week 1, Parts 1 to 6: intuition vs data, KPIs, the eight cases, the value chain and reading sales graphs.",
     questions: [
-      { q: "Anna Wintour's first Vogue cover (1988) mixed couture with jeans. What did the data say before she ran it?",
-        o: ["Focus groups loved it", "Nothing: it was a decision by instinct", "Sales of jeans were exploding", "An algorithm suggested it"], a: 1,
-        why: "There was no spreadsheet or focus group. Even the printers asked if it was a mistake. Intuition can win, but it has limits.", s: 9, t: "Anna Wintour's first cover" },
-      { q: "What does Shein do first when it spots a new trend online?",
-        o: ["Produces 10,000 pieces for every store", "Waits for next season's runway", "Makes a small batch of about 100 to 200 pieces and watches the clicks", "Asks a magazine editor"], a: 2,
-        why: "Test small, then scale what sells. Customer behaviour decides the reorder within days.", s: 15, t: "Shein: test small, then scale" },
-      { q: "Which of these is a leading signal, one that appears before people buy?",
-        o: ["Returns", "Markdowns", "Sell-through", "Google searches"], a: 3,
-        why: "Searches, saves and wishlist adds come early but are noisy. Sales, sell-through, markdowns and returns are lagging signals.", s: 19, t: "Leading vs lagging signals" },
-      { q: "A linen shirt: 1,000 units received, 700 sold in 8 weeks. What is the sell-through rate?",
+      {
+        q: "Anna Wintour's first Vogue cover (1988) mixed couture with jeans. What did the data say before she ran it?",
+        o: [
+          "Nothing: it was a decision by instinct",
+          "Sales of jeans were exploding",
+          "An algorithm suggested it",
+          "Focus groups loved it"
+        ],
+        a: 0,
+        why: "There was no spreadsheet or focus group. Even the printers asked if it was a mistake. Intuition can win, but it has limits.",
+        s: 9,
+        t: "Anna Wintour's first cover"
+      },
+      {
+        q: "How much textile waste does the world produce every year?",
+        o: [
+          "About 92 thousand tonnes",
+          "About 9 tonnes per city",
+          "Nobody measures it",
+          "About 92 million tonnes"
+        ],
+        a: 3,
+        why: "About 92 million tonnes a year, and roughly one truckload of textiles is landfilled or burned every second. Guessing demand wrong now has a planetary cost.",
+        s: 12,
+        t: "The cost of guessing wrong"
+      },
+      {
+        q: "How often do Zara stores receive new stock?",
+        o: [
+          "Twice a year",
+          "Once a season",
+          "Twice a week",
+          "Only when a store asks"
+        ],
+        a: 2,
+        why: "Stores report what customers ask for, designers react, and nearby factories restock stores twice a week. The company is built as a feedback loop.",
+        s: 14,
+        t: "Zara: a company built as a feedback loop"
+      },
+      {
+        q: "What does Shein do first when it spots a new trend online?",
+        o: [
+          "Waits for next season's runway",
+          "Makes a small batch of about 100 to 200 pieces and watches the clicks",
+          "Asks a magazine editor",
+          "Produces 10,000 pieces for every store"
+        ],
+        a: 1,
+        why: "Test small, then scale what sells. Customer behaviour decides the reorder within days.",
+        s: 15,
+        t: "Shein: test small, then scale"
+      },
+      {
+        q: "At Stitch Fix, who picks the final five items in a customer's box?",
+        o: [
+          "A human stylist, from the algorithm's shortlist",
+          "The warehouse team",
+          "The algorithm alone",
+          "The customer"
+        ],
+        a: 0,
+        why: "The algorithm narrows thousands of items to a shortlist; the stylist adds nuance, builds outfits and adds a wildcard.",
+        s: 16,
+        t: "Stitch Fix: algorithms plus human stylists"
+      },
+      {
+        q: "Which of these is a leading signal, one that appears before people buy?",
+        o: [
+          "Returns",
+          "Markdowns",
+          "Sell-through",
+          "Google searches"
+        ],
+        a: 3,
+        why: "Searches, saves and wishlist adds come early but are noisy. Sales, sell-through, markdowns and returns are lagging signals.",
+        s: 19,
+        t: "Leading vs lagging signals"
+      },
+      {
+        q: "A linen shirt: 1,000 units received, 700 sold in 8 weeks. What is the sell-through rate?",
         data: "Units received 1,000 · Units sold 700 · Sold at a discount 210 · Returned 84",
-        o: ["7%", "30%", "70%", "84%"], a: 2,
-        why: "Sell-through = units sold ÷ units received = 700 ÷ 1,000 = 70%.", s: 21, t: "Calculate it: the linen shirt" },
-      { q: "Which one is a vanity metric?",
-        o: ["Total followers", "Conversion rate by traffic source", "Units sold at full price", "Click-through to the product page"], a: 0,
-        why: "Ask: if this number moved, what would I do differently? For total followers, usually nothing.", s: 22, t: "Vanity vs actionable metrics" },
-      { q: "About 190,000 taste tests said people preferred New Coke. What did the data miss?",
-        o: ["The price of sugar", "People's emotional attachment to the original Coke", "That the sample was too small", "Competitor ads"], a: 1,
-        why: "The test measured the taste of one sip. People react to brand meaning. The original came back after 79 days.", s: 24, t: "New Coke (1985)" },
-      { q: "“The algorithm decides, people just follow the output.” What do we call this?",
-        o: ["Data-driven", "Data-controlled", "Data-informed", "Data literacy"], a: 1,
-        why: "Data-driven means data informs and people decide. Data-controlled means the spreadsheet decides.", s: 35, t: "Data-driven vs data-controlled" },
-      { q: "Return reasons such as “too small” flow back to which step of the value chain?",
-        o: ["Sourcing", "Distribution", "Design", "Marketing & CRM"], a: 2,
-        why: "After-sale data closes the loop: designers fix the fit, fabric or photos next time.", s: 47, t: "One chain, one flow of data" },
-      { q: "Site visits went from 50,000 to 100,000, and conversion fell from 3% to 1.5%. What happened to orders?",
+        o: [
+          "7%",
+          "30%",
+          "70%",
+          "84%"
+        ],
+        a: 2,
+        why: "Sell-through = units sold ÷ units received = 700 ÷ 1,000 = 70%.",
+        s: 21,
+        t: "Calculate it: the linen shirt"
+      },
+      {
+        q: "The linen shirt sold 700 units and 84 were returned. What is the return rate?",
+        data: "Return rate = items returned ÷ items sold",
+        o: [
+          "8.4%",
+          "12%",
+          "30%",
+          "84%"
+        ],
+        a: 1,
+        why: "84 ÷ 700 = 12%. Returns often point to sizing, quality or misleading photos.",
+        s: 21,
+        t: "Calculate it: the linen shirt"
+      },
+      {
+        q: "Which one is a vanity metric?",
+        o: [
+          "Total followers",
+          "Conversion rate by traffic source",
+          "Units sold at full price",
+          "Click-through to the product page"
+        ],
+        a: 0,
+        why: "Ask: if this number moved, what would I do differently? For total followers, usually nothing.",
+        s: 22,
+        t: "Vanity vs actionable metrics"
+      },
+      {
+        q: "About 190,000 taste tests said people preferred New Coke. What did the data miss?",
+        o: [
+          "That the sample was too small",
+          "Competitor ads",
+          "The price of sugar",
+          "People's emotional attachment to the original Coke"
+        ],
+        a: 3,
+        why: "The test measured the taste of one sip. People react to brand meaning. The original came back after 79 days.",
+        s: 24,
+        t: "New Coke (1985)"
+      },
+      {
+        q: "Target's pregnancy predictions were accurate. Why were they still a problem?",
+        o: [
+          "Nobody bought baby products",
+          "They cost too much",
+          "Customers found being predicted creepy",
+          "The data was fake"
+        ],
+        a: 2,
+        why: "Accurate is not the same as acceptable. Target ended up hiding baby ads among unrelated ones.",
+        s: 25,
+        t: "Target's pregnancy prediction"
+      },
+      {
+        q: "For years, low plus-size sales were read as a small market. What was the real cause?",
+        o: [
+          "People did not want clothes",
+          "A lack of appealing options",
+          "Prices were too low",
+          "Too much advertising"
+        ],
+        a: 1,
+        why: "A silent, unmet need: sales data cannot show what people would have bought if it existed.",
+        s: 34,
+        t: "What data can never see"
+      },
+      {
+        q: "“The algorithm decides, people just follow the output.” What do we call this?",
+        o: [
+          "Data-controlled",
+          "Data-informed",
+          "Data literacy",
+          "Data-driven"
+        ],
+        a: 0,
+        why: "Data-driven means data informs and people decide. Data-controlled means the spreadsheet decides.",
+        s: 35,
+        t: "Data-driven vs data-controlled"
+      },
+      {
+        q: "At which decision level can data trigger action most directly?",
+        o: [
+          "None: data never triggers action",
+          "Strategic (years)",
+          "Tactical (a season)",
+          "Operational (day to day)"
+        ],
+        a: 3,
+        why: "Prices, markdowns, email timing and restocking. At the strategic level data is one input among many.",
+        s: 37,
+        t: "Strategic, tactical, operational"
+      },
+      {
+        q: "Return reasons such as “too small” flow back to which step of the value chain?",
+        o: [
+          "Sourcing",
+          "Distribution",
+          "Design",
+          "Marketing & CRM"
+        ],
+        a: 2,
+        why: "After-sale data closes the loop: designers fix the fit, fabric or photos next time.",
+        s: 47,
+        t: "One chain, one flow of data"
+      },
+      {
+        q: "Units sold rose 25% after a discount, but the average price fell 20%. What happened to revenue?",
+        data: "400 × $100 → 500 × $80",
+        o: [
+          "Up 5%",
+          "It stayed at $40,000",
+          "Down 20%",
+          "Up 25%"
+        ],
+        a: 1,
+        why: "400 × $100 = 500 × $80 = $40,000. Same revenue, lower margin: gross profit fell by a quarter.",
+        s: 50,
+        t: "More units, less profit"
+      },
+      {
+        q: "Site visits went from 50,000 to 100,000, and conversion fell from 3% to 1.5%. What happened to orders?",
         data: "50,000 × 3% → 100,000 × 1.5%",
-        o: ["They doubled", "They stayed at 1,500", "They halved", "They rose by 50%"], a: 1,
-        why: "50,000 × 3% = 1,500 and 100,000 × 1.5% = 1,500. More traffic, same orders: check traffic quality and the site.", s: 51, t: "Traffic doubled. Orders didn't move." },
-      { q: "December sales are 50% lower than June. What is the fairest comparison?",
-        o: ["December vs last December", "December vs November", "December vs the best month ever", "No comparison needed"], a: 0,
-        why: "Compare like with like. Year over year, December was +15%: the business is growing.", s: 54, t: "Year over year beats month to month" },
-      { q: "A trench coat sells almost zero units in weeks 10 and 11. What should you check first?",
-        o: ["Whether the colour went out of fashion", "Whether it was out of stock", "Whether the logo changed", "Nothing: demand collapsed"], a: 1,
-        why: "Zero sales can mean zero stock. Demand did not disappear; check stock levels and “notify me” requests.", s: 55, t: "A spike, a dip and a gap" },
-      { q: "Revenue goes from €102k to €106k in six months. Chart A makes it look like a rocket. Why?",
-        o: ["Chart A uses fake data", "Chart A's axis starts at 100, not 0", "Chart A shows a different product", "Chart A is a bar chart"], a: 1,
-        why: "A cut axis makes +3.9% look huge. Always read the axis before the line.", s: 56, t: "Same data, two stories" },
-    ],
+        o: [
+          "They stayed at 1,500",
+          "They halved",
+          "They rose by 50%",
+          "They doubled"
+        ],
+        a: 0,
+        why: "50,000 × 3% = 1,500 and 100,000 × 1.5% = 1,500. More traffic, same orders: check traffic quality and the site.",
+        s: 51,
+        t: "Traffic doubled. Orders didn't move."
+      },
+      {
+        q: "December sales are 50% lower than June. What is the fairest comparison?",
+        o: [
+          "December vs November",
+          "December vs the best month ever",
+          "No comparison needed",
+          "December vs last December"
+        ],
+        a: 3,
+        why: "Compare like with like. Year over year, December was +15%: the business is growing.",
+        s: 54,
+        t: "Year over year beats month to month"
+      },
+      {
+        q: "A trench coat sells almost zero units in weeks 10 and 11. What should you check first?",
+        o: [
+          "Nothing: demand collapsed",
+          "Whether the colour went out of fashion",
+          "Whether it was out of stock",
+          "Whether the logo changed"
+        ],
+        a: 2,
+        why: "Zero sales can mean zero stock. Demand did not disappear; check stock levels and “notify me” requests.",
+        s: 55,
+        t: "A spike, a dip and a gap"
+      },
+      {
+        q: "Revenue goes from €102k to €106k in six months. Chart A makes it look like a rocket. Why?",
+        o: [
+          "Chart A uses fake data",
+          "Chart A's axis starts at 100, not 0",
+          "Chart A shows a different product",
+          "Chart A is a bar chart"
+        ],
+        a: 1,
+        why: "A cut axis makes +3.9% look huge. Always read the axis before the line.",
+        s: 56,
+        t: "Same data, two stories"
+      }
+    ]
   },
   q2: {
     title: "Quiz break 2",
     covers: "Part 7, the marketer's job: the marketing map, metrics, the funnel, media reports and the ten places a marketer uses data.",
     questions: [
-      { q: "Three Reel thumbnails get €300 each for 48 hours. How does the A/B test pick the winner?",
-        o: ["The designer's favourite", "The one with the best watch time gets the rest of the budget", "The cheapest to produce", "All three keep equal budget"], a: 1,
-        why: "Creative testing lets data compare versions with real viewers, then money follows the winner.", s: 64, t: "Asset production" },
-      { q: "A brand uploads its best 5,000 customers to an ad platform. What does the platform build?",
-        o: ["A look-alike audience of similar people", "A price list", "A trend forecast", "A new logo"], a: 0,
-        why: "Look-alike audiences find new people who resemble your best buyers.", s: 65, t: "Media & channels" },
-      { q: "A shopper saw TikTok, clicked a Google ad, then bought from an email. “Last click” gives 100% of the credit to…",
-        o: ["TikTok", "Google", "The email", "All three equally"], a: 2,
-        why: "Last-click attribution credits only the final touch, so it undervalues channels like TikTok that started the journey.", s: 66, t: "Measurement & reporting" },
-      { q: "In RFM segmentation, what do the letters stand for?",
-        o: ["Reach, Frequency, Mentions", "Recency, Frequency, Monetary value (spend)", "Return, Fit, Material", "Revenue, Followers, Margin"], a: 1,
-        why: "How recently, how often and how much a customer buys. VIP, regular, new and lapsed groups come from it.", s: 67, t: "Customer & CRM" },
-      { q: "An ad gets 2,000,000 impressions and reaches 800,000 people. What is the frequency?",
+      {
+        q: "Three Reel thumbnails get €300 each for 48 hours. How does the A/B test pick the winner?",
+        o: [
+          "The designer's favourite",
+          "The one with the best watch time gets the rest of the budget",
+          "The cheapest to produce",
+          "All three keep equal budget"
+        ],
+        a: 1,
+        why: "Creative testing lets data compare versions with real viewers, then money follows the winner.",
+        s: 64,
+        t: "Asset production"
+      },
+      {
+        q: "An AI writes descriptions for 2,000 products in 8 languages overnight. What must still happen?",
+        o: [
+          "An editor checks the tone and every product claim",
+          "Translate them again by hand",
+          "Delete the English version",
+          "Nothing, publish them"
+        ],
+        a: 0,
+        why: "Generative AI is fast, but a person stays responsible for tone and for every claim about the product.",
+        s: 64,
+        t: "Asset production"
+      },
+      {
+        q: "A brand uploads its best 5,000 customers to an ad platform. What does the platform build?",
+        o: [
+          "A price list",
+          "A trend forecast",
+          "A new logo",
+          "A look-alike audience of similar people"
+        ],
+        a: 3,
+        why: "Look-alike audiences find new people who resemble your best buyers.",
+        s: 65,
+        t: "Media & channels"
+      },
+      {
+        q: "Which creator is likely the better choice for a local launch?",
+        o: [
+          "Whoever is cheapest",
+          "1M followers, 0.4% engagement, mostly abroad",
+          "60k followers, 6% engagement, mostly local",
+          "Whoever has more followers"
+        ],
+        a: 2,
+        why: "Engagement and audience location matter more than follower count. Also check for fake followers.",
+        s: 65,
+        t: "Media & channels"
+      },
+      {
+        q: "A shopper saw TikTok, clicked a Google ad, then bought from an email. “Last click” gives 100% of the credit to…",
+        o: [
+          "Google",
+          "The email",
+          "All three equally",
+          "TikTok"
+        ],
+        a: 1,
+        why: "Last-click attribution credits only the final touch, so it undervalues channels like TikTok that started the journey.",
+        s: 66,
+        t: "Measurement & reporting"
+      },
+      {
+        q: "In RFM segmentation, what do the letters stand for?",
+        o: [
+          "Recency, Frequency, Monetary value (spend)",
+          "Return, Fit, Material",
+          "Revenue, Followers, Margin",
+          "Reach, Frequency, Mentions"
+        ],
+        a: 0,
+        why: "How recently, how often and how much a customer buys. VIP, regular, new and lapsed groups come from it.",
+        s: 67,
+        t: "Customer & CRM"
+      },
+      {
+        q: "An ad gets 2,000,000 impressions and reaches 800,000 people. What is the frequency?",
         data: "Frequency = impressions ÷ reach",
-        o: ["0.4", "1.6", "2.5", "8"], a: 2,
-        why: "2,000,000 ÷ 800,000 = 2.5. Each person saw it about two and a half times.", s: 69, t: "Attention metrics" },
-      { q: "€8,000 of ads brought 240 orders. What is the CPA (cost per acquisition)?",
-        o: ["€0.53", "€3.00", "€33.33", "€90"], a: 2,
-        why: "CPA = spend ÷ orders = €8,000 ÷ 240 = €33.33.", s: 72, t: "What can we calculate from the funnel?" },
-      { q: "In the funnel, 7,200 people view a product and 720 add it to the cart. What should the marketer fix first?",
-        o: ["Buy more ads", "The product page: 90% leave there", "The checkout button colour", "Nothing, 10% is perfect"], a: 1,
-        why: "The leakiest step is product page to cart. Check size info, photos, reviews and price before buying more traffic.", s: 73, t: "Questions a marketer asks the funnel" },
-      { q: "Gross margin is 60%. Above which ROAS does the campaign start to make money?",
+        o: [
+          "0.4",
+          "1.6",
+          "2.5",
+          "8"
+        ],
+        a: 2,
+        why: "2,000,000 ÷ 800,000 = 2.5. Each person saw it about two and a half times.",
+        s: 69,
+        t: "Attention metrics"
+      },
+      {
+        q: "€20,000 buys 2,000,000 impressions. What is the CPM?",
+        data: "CPM = spend ÷ impressions × 1,000",
+        o: [
+          "€0.01",
+          "€1",
+          "€10",
+          "€100"
+        ],
+        a: 2,
+        why: "€20,000 ÷ 2,000,000 × 1,000 = €10 for every thousand times the ad is shown.",
+        s: 69,
+        t: "Attention metrics"
+      },
+      {
+        q: "€8,000 of ads brought 240 orders. What is the CPA (cost per acquisition)?",
+        o: [
+          "€0.53",
+          "€3.00",
+          "€33.33",
+          "€90"
+        ],
+        a: 2,
+        why: "CPA = spend ÷ orders = €8,000 ÷ 240 = €33.33.",
+        s: 72,
+        t: "What can we calculate from the funnel?"
+      },
+      {
+        q: "720 shoppers added to cart and 240 bought. What is the cart abandonment rate?",
+        data: "Cart abandonment = 1 − purchases ÷ add to cart",
+        o: [
+          "33%",
+          "50%",
+          "67%",
+          "240%"
+        ],
+        a: 2,
+        why: "240 ÷ 720 = 33% bought, so 67% left their cart: two in three carts are abandoned.",
+        s: 72,
+        t: "What can we calculate from the funnel?"
+      },
+      {
+        q: "In the funnel, 7,200 people view a product and 720 add it to the cart. What should the marketer fix first?",
+        o: [
+          "The checkout button colour",
+          "Nothing, 10% is perfect",
+          "Buy more ads",
+          "The product page: 90% leave there"
+        ],
+        a: 3,
+        why: "The leakiest step is product page to cart. Check size info, photos, reviews and price before buying more traffic.",
+        s: 73,
+        t: "Questions a marketer asks the funnel"
+      },
+      {
+        q: "Gross margin is 60%. Above which ROAS does the campaign start to make money?",
         data: "Break-even ROAS = 1 ÷ margin",
-        o: ["0.6", "1.0", "1.67", "2.7"], a: 2,
-        why: "1 ÷ 0.6 = 1.67. Below that, ads cost more than the profit they bring.", s: 73, t: "Questions a marketer asks the funnel" },
-      { q: "Google search: €2,000 spend, 75 orders, €90 average order. What is its ROAS?",
+        o: [
+          "0.6",
+          "1.0",
+          "1.67",
+          "2.7"
+        ],
+        a: 2,
+        why: "1 ÷ 0.6 = 1.67. Below that, ads cost more than the profit they bring.",
+        s: 73,
+        t: "Questions a marketer asks the funnel"
+      },
+      {
+        q: "If we double the ad budget, do orders double?",
+        o: [
+          "Yes, always",
+          "Rarely: extra money reaches colder audiences and CPA rises",
+          "Orders fall to zero",
+          "Only on TikTok"
+        ],
+        a: 1,
+        why: "Platforms show ads to the most likely buyers first. Increase budget in steps and watch CPA.",
+        s: 73,
+        t: "Questions a marketer asks the funnel"
+      },
+      {
+        q: "Google search: €2,000 spend, 75 orders, €90 average order. What is its ROAS?",
         data: "ROAS = revenue ÷ spend",
-        o: ["0.27", "1.35", "2.25", "3.38"], a: 3,
-        why: "75 × €90 = €6,750 revenue ÷ €2,000 = 3.38, the best of the three channels.", s: 74, t: "Three channels, one budget" },
-      { q: "A TikTok launch film has a ROAS of 1.1 but 3,200 mentions. Its goal was talkability. What do you do?",
-        o: ["Stop it: the ROAS is too low", "Judge it on reach, views and mentions instead", "Move all its budget to retargeting", "Ignore the report"], a: 1,
-        why: "Judge each campaign on its own goal. A talkability film is not a sales ad.", s: 75, t: "A real-looking media report" },
-      { q: "Sales rose 10% in cities with the campaign and 8% in similar cities without it. What is the real lift?",
-        o: ["About 2 points", "10%", "18%", "8%"], a: 0,
-        why: "Compare with a group that did not see the campaign: 10% − 8% ≈ 2 points of real effect.", s: 85, t: "Campaign success" },
-    ],
-  },
+        o: [
+          "0.27",
+          "1.35",
+          "2.25",
+          "3.38"
+        ],
+        a: 3,
+        why: "75 × €90 = €6,750 revenue ÷ €2,000 = 3.38, the best of the three channels.",
+        s: 74,
+        t: "Three channels, one budget"
+      },
+      {
+        q: "A TikTok launch film has a ROAS of 1.1 but 3,200 mentions. Its goal was talkability. What do you do?",
+        o: [
+          "Move all its budget to retargeting",
+          "Ignore the report",
+          "Stop it: the ROAS is too low",
+          "Judge it on reach, views and mentions instead"
+        ],
+        a: 3,
+        why: "Judge each campaign on its own goal. A talkability film is not a sales ad.",
+        s: 75,
+        t: "A real-looking media report"
+      },
+      {
+        q: "Which KPI fits a campaign whose goal is purchases, not talkability?",
+        o: [
+          "Average watch time",
+          "Share of voice",
+          "CPA and ROAS",
+          "Mentions"
+        ],
+        a: 2,
+        why: "Talkability is judged on reach, views, mentions and sentiment; purchase campaigns on clicks, conversion, CPA and ROAS.",
+        s: 76,
+        t: "Where should €100,000 go?"
+      },
+      {
+        q: "Knitwear is at 35% sell-through in week 6. What is the data-smart move?",
+        o: [
+          "50% off everything in store",
+          "A 20% markdown on the slow colours only",
+          "Stop selling knitwear",
+          "Double the order"
+        ],
+        a: 1,
+        why: "Targeted markdowns instead of a blanket sale: bestsellers stay at full price.",
+        s: 81,
+        t: "Pricing & merchandising"
+      },
+      {
+        q: "Fitting-room data shows a jacket is tried on often but rarely bought. What should you check first?",
+        o: [
+          "The fit",
+          "The weather",
+          "The ad budget",
+          "The logo"
+        ],
+        a: 0,
+        why: "People like it enough to try it on, but something stops them at the mirror: usually fit.",
+        s: 84,
+        t: "In-store experience"
+      },
+      {
+        q: "Sales rose 10% in cities with the campaign and 8% in similar cities without it. What is the real lift?",
+        o: [
+          "10%",
+          "18%",
+          "8%",
+          "About 2 points"
+        ],
+        a: 3,
+        why: "Compare with a group that did not see the campaign: 10% − 8% ≈ 2 points of real effect.",
+        s: 85,
+        t: "Campaign success"
+      },
+      {
+        q: "An influencer post will push a jacket in Istanbul next week. What should happen before it goes live?",
+        o: [
+          "Raise the price",
+          "Nothing, wait and see",
+          "Move stock to Istanbul so shoppers find it",
+          "Cancel the post"
+        ],
+        a: 2,
+        why: "Match campaign reach with stock. Marketing shares the campaign calendar so planning can move units in time.",
+        s: 86,
+        t: "Inventory & allocation"
+      }
+    ]
+  }
 };
 
 const PTS = 100;
