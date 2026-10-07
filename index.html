@@ -121,8 +121,104 @@ footer { font-size: .85rem; color: var(--muted) }
 
 <script>
 const QUIZZES = {
+  w2: {
+    title: "Week 2 quiz",
+    covers: "Week 2, Parts 1 to 6: decision first, the analytics ladder, the five data traps, how models learn, generative AI and ethics. 30 questions, some true or false.",
+    questions: [
+      { q: "The Mechanical Turk (1770) beat famous chess players. What was its secret?",
+        o: ["Very advanced gears", "A human chess master hidden inside", "Magnets moved by the audience", "It only played beginners"], a: 1,
+        why: "A person hid inside the cabinet and moved the pieces. Today, many AI systems still rely on people who label data and check results.", s: 5, t: "The Mechanical Turk" },
+      { q: "True or false: most AI works without any human help.",
+        o: ["True", "False"], a: 1,
+        why: "False. People label the training data, check the output and decide the goal. Someone is always inside the cabinet.", s: 6, t: "Behind most AI, there are people" },
+      { q: "The cobra reward made the cobra problem worse. What is the lesson for marketers?",
+        o: ["Rewards never work", "Snakes are hard to count", "When a number becomes a target, people chase the number, not the goal", "Always pay more"], a: 2,
+        why: "This is Goodhart's law: when a measure becomes a target, it stops being a good measure. Ask how someone could hit the number without reaching the goal.", s: 8, t: "The cobra effect" },
+      { q: "A brand rewards a low return rate. What “cobra” could appear?",
+        o: ["Returns become slow and complicated", "Better size guides", "More product photos", "Fewer customers"], a: 0,
+        why: "The return rate goes down, but customer trust and repeat purchases suffer. The number improved, the goal did not.", s: 9, t: "Fashion has its own cobras" },
+      { q: "“Sales are bad” is too vague for data to answer.",
+        o: ["True", "False"], a: 0,
+        why: "True. It is too vague. Break it into questions data can answer: did people see it, look closer, want it, get stopped, keep it?", s: 10, t: "“Sales are bad” is not a question" },
+      { q: "What is the right order?",
+        o: ["Data → metric → question → decision", "Metric → data → decision → question", "Question → data → decision → metric", "Decision → question → metric → data"], a: 3,
+        why: "Start from the decision. If you start from the data, you find interesting numbers that change nothing.", s: 11, t: "Decision → question → metric → data" },
+      { q: "Should we renew the influencer contract? Which metric answers this best?",
+        o: ["Number of likes on her posts", "Cost per sale: fee ÷ orders with her code", "Her number of followers", "How many posts she made"], a: 1,
+        why: "Likes and followers are vanity metrics here. Cost per sale shows whether her audience buys, and you can compare it with other channels.", s: 11, t: "The chain" },
+      { q: "In a sales dataset, what is usually one row?",
+        o: ["One observation, for example one order", "One variable, like price", "One chart", "One month of totals, always"], a: 0,
+        why: "A row is one observation; a column is one variable. Before calculating, always check what one row is in your file.", s: 12, t: "Anatomy of a dataset" },
+      { q: "“Channel” (online, store, app) is what type of column?",
+        o: ["A number", "A date", "A category", "An ID"], a: 2,
+        why: "Channel is a category: you count and group it (orders by channel). You add and average numbers, and follow dates over time.", s: 12, t: "Anatomy of a dataset" },
+      { q: "“Knitwear sales fell 10% last week.” Which rung of the analytics ladder is this?",
+        o: ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"], a: 0,
+        why: "It describes what happened. Diagnostic asks why, predictive asks what will happen, prescriptive asks what we should do.", s: 15, t: "The analytics ladder" },
+      { q: "“Move online stock to those 40 stores and reorder now.” Which rung is this?",
+        o: ["Descriptive", "Diagnostic", "Predictive", "Prescriptive"], a: 3,
+        why: "It says what to do: prescriptive, the top rung. That rung still needs a person to decide.", s: 15, t: "The analytics ladder" },
+      { q: "Sales dropped. What should you check before you explain the drop?",
+        o: ["The weather", "Whether the data itself is wrong", "The competitors' prices", "Instagram likes"], a: 1,
+        why: "Step zero: a missing sales file, a new website tag or a currency change can look like a crisis. Many “crises” are data problems.", s: 16, t: "The diagnostic toolkit" },
+      { q: "Why was NASA's Mars Climate Orbiter lost in 1999?",
+        o: ["A meteor hit it", "Its battery failed", "One team used pounds, the other expected newtons", "It ran out of fuel"], a: 2,
+        why: "A unit mix-up nobody converted. Garbage in, garbage out: a brilliant analysis of bad data is still wrong.", s: 18, t: "Trap 1: garbage in" },
+      { q: "Three teams report 1,200, 950 and 1,450 sales of the same dress. What is the fix?",
+        o: ["A data dictionary that defines each KPI", "Take the average", "Trust the biggest number", "Ask AI to choose"], a: 0,
+        why: "They count different things (orders placed, paid and not returned, all channels). One shared definition per KPI solves it.", s: 19, t: "Trap 2: what is a sale?" },
+      { q: "Nicolas Cage films and pool drownings rose and fell together. So one causes the other.",
+        o: ["True", "False"], a: 1,
+        why: "False. With enough data, some things move together by pure chance. Correlation is not causation.", s: 20, t: "Trap 3: correlation" },
+      { q: "App users spend twice as much. What could be the hidden third factor?",
+        o: ["The app's colour", "The phone brand", "The time of day", "Loyal fans download the app and also spend more"], a: 3,
+        why: "Loyalty drives both. To prove the app adds anything, compare similar customers or run a random test (A/B test).", s: 21, t: "Trap 4: the hidden third factor" },
+      { q: "Abraham Wald said to add armour where the returning planes had NO holes. Why?",
+        o: ["Those parts were cheaper", "The holes were fake", "The engines were already strong", "Planes hit there never came back"], a: 3,
+        why: "The data only showed survivors. Always ask who is missing from your data, for example unhappy customers who never write reviews.", s: 22, t: "Trap 5: who is missing?" },
+      { q: "A small sample that looks like your customers can beat a huge one that does not.",
+        o: ["True", "False"], a: 0,
+        why: "True. Literary Digest got 2.4 million answers and picked the wrong winner; Gallup picked the right one with about 50,000. Size alone does not fix who is missing.", s: 23, t: "Bigger is not better" },
+      { q: "“IF stock < 20 THEN send a reorder alert.” Is this machine learning?",
+        o: ["Yes, it is AI", "No, it is a rule a person wrote"], a: 1,
+        why: "It is automation: a person wrote the rule. Machine learning finds the rules itself from examples.", s: 28, t: "Rules or learning?" },
+      { q: "What did Clever Hans, the “counting” horse, really learn?",
+        o: ["Basic maths", "To read tiny signals in people's faces", "To count by sound", "Nothing at all"], a: 1,
+        why: "He learned a pattern that worked, not maths. AI can do the same, so a model must be tested on new cases.", s: 29, t: "Clever Hans" },
+      { q: "A return-risk model says 72% for an order. What does that mean?",
+        o: ["The order will be returned", "72% of the order will come back", "About 7 in 10 orders like this one come back", "The model is 72% finished"], a: 2,
+        why: "It is a probability, not a fact. This order might be kept. A person still decides what to do.", s: 30, t: "A model: inputs in, a guess out" },
+      { q: "How do we know if a model is any good?",
+        o: ["It sounds confident", "It was expensive", "It uses a lot of data", "Test it on cases it has never seen"], a: 3,
+        why: "Learn on one part of the past, test on another part. Then count both kinds of mistakes: misses and false alarms.", s: 31, t: "Test it on cases it has never seen" },
+      { q: "Learning from orders already marked “returned” or “kept” is…",
+        o: ["Supervised learning", "Unsupervised learning", "Generative AI", "A rule"], a: 0,
+        why: "The examples come with the right answer (a label), so it is supervised. Unsupervised learning finds groups without answers.", s: 32, t: "Supervised vs unsupervised" },
+      { q: "Zillow's house-price algorithm failed in 2021 mainly because…",
+        o: ["It had no data", "Hackers attacked it", "The market changed and the model kept learning the past", "Staff ignored it"], a: 2,
+        why: "Models learn the past. When the world changes (drift), a person must notice and step in.", s: 34, t: "Zillow" },
+      { q: "A language model writes text by…",
+        o: ["Predicting a likely next word, one at a time", "Checking facts in a database", "Copying one website", "Asking a human"], a: 0,
+        why: "It is a very well-read autocomplete. It writes what sounds likely, not what is checked, so it can invent facts and sources.", s: 37, t: "A very well-read autocomplete" },
+      { q: "The “Balenciaga Pope” image was made by Balenciaga.",
+        o: ["True", "False"], a: 1,
+        why: "False. A man in the Chicago area made it with Midjourney, for fun. Brands now need to verify images, and disclose their own AI images.", s: 38, t: "The Pope in a white puffer coat" },
+      { q: "Air Canada's chatbot invented a refund policy. Who was held responsible?",
+        o: ["The chatbot", "The customer", "Air Canada", "The software supplier"], a: 2,
+        why: "The tribunal rejected the idea that the chatbot was responsible for itself. A brand owns everything its AI says.", s: 41, t: "The chatbot that invented a refund policy" },
+      { q: "A style quiz where customers tell you their size and favourite colours gives you…",
+        o: ["Zero-party data", "Second-party data", "Third-party data", "No data"], a: 0,
+        why: "Zero-party data is what customers share with you on purpose. It is the most trusted kind.", s: 45, t: "Zero-, first-, second-, third-party data" },
+      { q: "Under GDPR, a pre-ticked “yes, send me marketing” box counts as consent.",
+        o: ["True", "False"], a: 1,
+        why: "False. Consent must be a clear, active choice. Collect less, say why, have permission and let people control their data.", s: 46, t: "Four habits for every fashion marketer" },
+      { q: "“Only 2 left!” on every product, whatever the real stock, is…",
+        o: ["Helpful", "Creepy", "Manipulative", "Smart personalisation"], a: 2,
+        why: "False scarcity pushes a decision with false information. That breaks trust, and sometimes the law.", s: 48, t: "Helpful, creepy, or manipulative?" }
+    ]
+  },
   q1: {
-    title: "Quiz break 1",
+    title: "Week 1 · Quiz break 1",
     covers: "Week 1, Parts 1 to 6: intuition vs data, KPIs, the eight cases, the value chain and reading sales graphs.",
     questions: [
       {
@@ -392,7 +488,7 @@ const QUIZZES = {
     ]
   },
   q2: {
-    title: "Quiz break 2",
+    title: "Week 1 · Quiz break 2",
     covers: "Part 7, the marketer's job: the marketing map, metrics, the funnel, media reports and the ten places a marketer uses data.",
     questions: [
       {
@@ -673,7 +769,7 @@ const store = {
   set(v) { try { localStorage.setItem("fdq", JSON.stringify(v)) } catch {} },
 };
 
-let S = { view: "start", quiz: "q1", mode: null, i: 0, revealed: false, picked: null, teams: ["Team A", "Team B", "Team C", "Team D"], scores: [], awarded: [], solo: [], timer: 30 };
+let S = { view: "start", quiz: "w2", mode: null, i: 0, revealed: false, picked: null, teams: ["Team A", "Team B", "Team C", "Team D"], scores: [], awarded: [], solo: [], timer: 30 };
 const saved = store.get();
 if (saved && saved.view === "game" && (saved.mode === "team" || saved.mode === "present")) S = { ...S, ...saved };
 let tick = null, left = 0;
@@ -682,7 +778,7 @@ function save() { store.set(S) }
 function go(patch) { Object.assign(S, patch); save(); render() }
 
 function header() {
-  return `<header class="top"><div><div class="eyebrow">Fashion Data Science · Week 1</div><h1>Fashion Data <span>Quiz</span></h1></div>
+  return `<header class="top"><div><div class="eyebrow">Fashion Data Science · Weeks 1–2</div><h1>Fashion Data <span>Quiz</span></h1></div>
   ${S.view !== "start" ? `<button class="ghost" id="home">Back to start</button>` : `<div class="muted">For the projector or for review at home</div>`}</header>`;
 }
 
@@ -705,7 +801,7 @@ function startView() {
       <select id="timer" style="font:inherit;padding:.4em;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg)">
         ${[0, 20, 30, 45].map((t) => `<option value="${t}" ${S.timer === t ? "selected" : ""}>${t ? t + " seconds" : "No timer"}</option>`).join("")}
       </select></label></div></details>
-  <footer>Answers point to slide numbers in the revised Week 1 deck.</footer>`;
+  <footer>Answers point to slide numbers in that week's deck.</footer>`;
 }
 
 function progressBar(z) {

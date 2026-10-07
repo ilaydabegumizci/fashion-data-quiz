@@ -1,6 +1,6 @@
 # Fashion Data Quiz
 
-Quiz breaks for the Fashion Data Science course (Week 1).
+Quiz breaks for the Fashion Data Science course (Weeks 1 and 2).
 
 Live site: https://ilaydabegumizci.github.io/fashion-data-quiz/
 
