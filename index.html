@@ -82,6 +82,7 @@ button.small { font-size: .88rem; padding: .3em 0; border: 0; text-decoration: u
 .opt.correct { border-color: var(--ok); background: var(--ok-bg) }
 .opt.wrong { border-color: var(--bad); background: var(--bad-bg) }
 .opt.dim { opacity: .5 }
+.opt.mine { border-color: var(--mag); border-width: 3px; background: var(--sunk) }
 .opt-static { border: 2px solid var(--line); border-radius: 6px; background: var(--surface) }
 .opt:disabled { opacity: 1; cursor: default }
 .opt.dim:disabled { opacity: .5 }
@@ -121,6 +122,39 @@ footer { font-size: .85rem; color: var(--muted) }
 
 <script>
 const QUIZZES = {
+  ethics: {
+    title: "Week 2 · Helpful, creepy or manipulative?",
+    poll: true,
+    covers: "In-class game, no score. 13 fashion situations, real and made up. Sort each one on your phone, then we compare and discuss. There is a suggested answer, but you may disagree if you can defend it.",
+    questions: [
+      { q: "Your favourite brand's app says: “You kept size M from us four times. This jacket runs small, so we suggest L.”",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 0, why: "It uses your own purchase history, for your benefit, in a way you would expect. Fewer returns for you and for the brand.", t: "Size advice from purchase history" },
+      { q: "Nordstrom, 2012–13: 17 stores tracked shoppers' phones through the store Wi-Fi to see where they walked. After complaints it stopped in May 2013.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 1, why: "Real case. Shoppers did not expect their phones to be followed around the store. Legal or not, unexpected tracking feels like being watched.", t: "Nordstrom Wi-Fi tracking" },
+      { q: "A product page shows “Only 2 left! 14 people are looking now”. Each time you reload the page, the timer starts again from 10:00.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 2, why: "The pressure is fake. It pushes you to buy fast with false information: that is manipulation, also called a dark pattern.", t: "Fake countdown timer" },
+      { q: "A style quiz asks your sizes, budget and the styles you love, then a stylist and an algorithm choose five pieces for you (the Stitch Fix model).",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 0, why: "You gave this data on purpose to get something back. This is zero-party data used exactly as promised.", t: "Style quiz (zero-party data)" },
+      { q: "An email says: “Congratulations! We noticed you've been browsing maternity wear.” You have not told anyone yet. (Made up, but realistic.)",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 1, why: "Technically it is your browsing data, but the brand guessed something very private and said it out loud. Guessing sensitive life events crosses the line.", t: "Maternity email" },
+      { q: "To close a pop-up, you must click: “No thanks, I don't like saving money.”",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 2, why: "This is called confirmshaming: it uses guilt to steer your choice. A fair pop-up has a plain “No thanks”.", t: "Confirmshaming pop-up" },
+      { q: "H&M, 2025: the brand plans AI “digital twins” of 30 real models. The models agreed, own the rights and are paid each time their twin is used.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 0, why: "Real case. Consent, ownership and payment make it fair to the models. Unions still worried about jobs for stylists and make-up artists, so be ready to discuss.", t: "H&M digital twins" },
+      { q: "A day after you visit a store, an ad says: “Still thinking about the boots you looked at in our Istiklal store yesterday?” (Made up, but realistic.)",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 1, why: "It shows the brand follows your location online and offline. Most people did not expect that, so it feels creepy, even if they clicked “accept” once.", t: "Location-based ad" },
+      { q: "J.Crew × Vans, August 2025: Instagram “retro photos” were really AI images, with no label. Fans spotted a backwards ankle and a fake camera. The caption was changed later.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 2, why: "Real case. Showing AI images as real photos misleads customers. Under the EU AI Act, realistic AI content must now be labelled.", t: "J.Crew × Vans unlabelled AI images" },
+      { q: "A virtual try-on app asks for your selfie. Page 14 of the terms says the brand keeps all photos to train its AI.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 1, why: "Many would also say manipulative, because it is hidden. Using your face for something you did not expect, without clear consent, is the creepy part.", t: "Try-on selfies kept for training" },
+      { q: "You visit the same dress page three times. Each time the price is a little higher. (Made up, but realistic.)",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 2, why: "Using your interest against you, so you pay more, is manipulation. It also destroys trust when people compare prices.", t: "Price rises with your visits" },
+      { q: "You left a jacket in your basket. The next day you get one email: “Your jacket is still waiting, here is free delivery.” You signed up for emails.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 0, why: "You agreed to emails and the message is useful. One reminder is service; five reminders in two days would start to feel different.", t: "Abandoned basket email" },
+      { q: "Guess in Vogue US, August 2025: a two-page ad shows a realistic AI-generated model. A small note says “AI-generated”. Readers protested about jobs and beauty standards.",
+        o: ["Helpful", "Creepy", "Manipulative"], a: 2, why: "Real case, and debatable: it was labelled, but in small print, and it shows an impossible “perfect” body as if real. Some will say creepy, some will say fine. Defend your choice.", t: "Guess AI model in Vogue" },
+    ],
+  },
   w2: {
     title: "Week 2 review quiz (homework)",
     covers: "Homework before Week 3. 30 scenario questions on everything from Week 2: decision first, datasets, the ladder, the five traps, how models learn and are tested, generative AI, data types, GDPR, bias and the AI Act. Some need a small calculation. Take your time.",
@@ -789,10 +823,10 @@ function header() {
 
 function startView() {
   const cards = Object.entries(QUIZZES).map(([k, z]) => `
-    <section class="quizcard"><div class="eyebrow">${z.questions.length} questions</div><h2>${esc(z.title)}</h2>
+    <section class="quizcard"><div class="eyebrow">${z.questions.length} ${z.poll ? "situations · no score" : "questions"}</div><h2>${esc(z.title)}</h2>
     <p class="covers muted" style="margin:0">${esc(z.covers)}</p>
     <div class="row"><button class="primary" data-start="${k}" data-mode="present">Present to the class</button><button data-start="${k}" data-mode="solo">Play on my phone</button></div>
-    <button class="ghost small" data-start="${k}" data-mode="team">Or play as teams with a scoreboard</button></section>`).join("");
+    ${z.poll ? "" : `<button class="ghost small" data-start="${k}" data-mode="team">Or play as teams with a scoreboard</button>`}</section>`).join("");
   return `${header()}
   <div class="choices">${cards}</div>
   <div class="modes">
@@ -824,22 +858,25 @@ function gameView() {
   const answered = team ? S.revealed : S.picked !== null;
   const opts = q.o.map((t, k) => {
     let cls = "opt";
-    if (answered) cls += k === q.a ? " correct" : (!team && k === S.picked ? " wrong" : " dim");
+    if (answered) cls += z.poll ? (k === S.picked ? " mine" : k === q.a ? " correct" : " dim") : k === q.a ? " correct" : (!team && k === S.picked ? " wrong" : " dim");
     return team ? `<div class="${cls} opt-static"><b>${"ABCD"[k]}</b><span>${esc(t)}</span></div>`
       : `<button class="${cls}" data-opt="${k}" ${answered ? "disabled" : ""}><b>${"ABCD"[k]}</b><span>${esc(t)}</span></button>`;
   }).join("");
   let fb = "";
   if (answered) {
     const right = team || S.picked === q.a;
-    fb = `<div class="feedback ${right ? "ok" : "bad"}"><div class="verdict">${team ? "Answer: " + "ABCD"[q.a] : right ? "Correct" : "Not quite. The answer is " + "ABCD"[q.a]}</div>
+    fb = z.poll
+      ? `<div class="feedback ok"><div class="verdict">${team ? "Suggested: " + q.o[q.a] : right ? "Same as the suggested answer: " + q.o[q.a] : "You chose " + q.o[S.picked] + ". Suggested: " + q.o[q.a] + ". Be ready to defend your choice."}</div>
+      <div>${esc(q.why)}</div></div>`
+      : `<div class="feedback ${right ? "ok" : "bad"}"><div class="verdict">${team ? "Answer: " + "ABCD"[q.a] : right ? "Correct" : "Not quite. The answer is " + "ABCD"[q.a]}</div>
       <div>${esc(q.why)}</div>
       <div class="slideref">${right && !team ? "Covered on" : "Go back to"} <span class="num">Slide ${q.s}</span> ${esc(q.t)}</div></div>`;
   }
   const award = scoring && S.revealed ? `<div class="award"><div class="muted">Tap the teams that got it right:</div><div class="chips">${S.teams.map((n, k) => `<button class="chip" data-award="${k}" aria-pressed="${(S.awarded[S.i] || []).includes(k)}">${esc(n)}</button>`).join("")}</div></div>` : "";
   const last = S.i === z.questions.length - 1;
   const ctrl = team
-    ? (S.revealed ? `<button class="primary" id="next">${last ? "See the final scores" : "Next question"}</button>` : `<button class="primary" id="reveal">Reveal the answer</button>`)
-    : (answered ? `<button class="primary" id="next">${last ? "See my result" : "Next question"}</button>` : `<span class="muted">Tap an answer.</span>`);
+    ? (S.revealed ? `<button class="primary" id="next">${last ? (z.poll ? "Finish" : "See the final scores") : "Next question"}</button>` : `<button class="primary" id="reveal">${z.poll ? "Show the suggested answer" : "Reveal the answer"}</button>`)
+    : (answered ? `<button class="primary" id="next">${last ? (z.poll ? "See my choices" : "See my result") : "Next question"}</button>` : `<span class="muted">Tap an answer.</span>`);
   return `${header()}<div class="game"><section class="stage">
     ${progressBar(z)}
     <div class="qmeta"><span class="eyebrow">${esc(z.title)} · Question ${S.i + 1} of ${z.questions.length}</span>${team && S.timer && !S.revealed ? `<span class="timer" id="clock">${S.timer}</span>` : ""}</div>
@@ -852,6 +889,19 @@ function gameView() {
 
 function resultView() {
   const z = QUIZZES[S.quiz];
+  if (S.mode === "present" && z.poll) {
+    return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Finished</div><h2 class="question">Which one split the room?</h2>
+      <p style="margin:0">Look at your choices on your phone. Where did you disagree with the suggested answer, and why?</p>
+      <div class="row"><button class="primary" id="home2">Back to start</button></div></section>`;
+  }
+  if (S.mode === "solo" && z.poll) {
+    const diff = z.questions.filter((q, k) => S.solo[k] !== q.a).length;
+    return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Your choices</div>
+      <h2 class="question">You disagreed with the suggestion ${diff} time${diff === 1 ? "" : "s"}</h2>
+      <p style="margin:0">There is no score. Bring the ones you disagreed with to the class discussion.</p>
+      <ul class="review">${z.questions.map((q, k) => `<li><span class="slideref"><span class="num">${esc(q.o[S.solo[k]] ?? "–")}</span> ${esc(q.t)}${S.solo[k] !== q.a ? ` <span class="muted">(suggested: ${esc(q.o[q.a])})</span>` : ""}</span></li>`).join("")}</ul>
+      <div class="row"><button class="primary" id="again">Play again</button><button id="home2">Back to start</button></div></section>`;
+  }
   if (S.mode === "present") {
     return `${header()}<section class="stage"><div class="eyebrow">${esc(z.title)} · Finished</div><h2 class="question">Check your score on your phone</h2>
       <p style="margin:0">Your result screen lists the slides to revisit. Your score is only visible to you.</p>
