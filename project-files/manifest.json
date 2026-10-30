@@ -1,0 +1,71 @@
+[
+ {
+  "file": "accessories_dataset.enc",
+  "name": "accessories_dataset.xlsx",
+  "kb": 632,
+  "model": "accessories and gifting",
+  "about": "Jewelry, watches, bags, scarves and sunglasses. Own stores, website and wholesale to other retailers.",
+  "rows": 8543
+ },
+ {
+  "file": "dtc_dataset.enc",
+  "name": "dtc_dataset.xlsx",
+  "kb": 625,
+  "model": "digital native (direct-to-consumer)",
+  "about": "Everyday apparel, a signature shoe, beauty and home goods. Sells through its website, its app and marketplaces.",
+  "rows": 8354
+ },
+ {
+  "file": "fast_fashion_dataset.enc",
+  "name": "fast_fashion_dataset.xlsx",
+  "kb": 686,
+  "model": "fast fashion",
+  "about": "Trend-led collections, low prices, many new products. Sells mainly online, plus stores and a marketplace.",
+  "rows": 9051
+ },
+ {
+  "file": "luxury_dataset.enc",
+  "name": "luxury_dataset.xlsx",
+  "kb": 407,
+  "model": "luxury house",
+  "about": "Leather goods, jewelry, ready-to-wear, shoes and accessories at luxury prices. Flagship stores, website and department-store concessions.",
+  "rows": 5342
+ },
+ {
+  "file": "niche_dataset.enc",
+  "name": "niche_dataset.xlsx",
+  "kb": 347,
+  "model": "niche designer label",
+  "about": "Avant-garde and conceptual fashion, limited editions, collaborations and art pieces. Website, gallery store and events.",
+  "rows": 4350
+ },
+ {
+  "file": "premium_dataset.enc",
+  "name": "premium_dataset.xlsx",
+  "kb": 548,
+  "model": "premium / accessible luxury",
+  "about": "Clothing, bags, footwear, accessories and jewelry. Own boutiques, website, and wholesale corners in department stores.",
+  "rows": 7362
+ },
+ {
+  "file": "streetwear_dataset.enc",
+  "name": "streetwear_dataset.xlsx",
+  "kb": 582,
+  "model": "streetwear",
+  "about": "Limited drops and collaborations. Mostly online, plus a flagship store and pop-ups.",
+  "rows": 7883
+ },
+ {
+  "file": "sustainable_dataset.enc",
+  "name": "sustainable_dataset.xlsx",
+  "kb": 456,
+  "model": "sustainable / ethical",
+  "about": "Organic and natural materials, eco footwear, recycled and upcycled pieces. Website, pop-up stores and specialty retailers.",
+  "rows": 6018
+ },
+ {
+  "file": "Brand-Manager-Decision-Lab-brief-2026.enc",
+  "name": "Brand-Manager-Decision-Lab-brief-2026.pdf",
+  "kb": 186
+ }
+]

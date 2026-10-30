@@ -969,7 +969,7 @@ function save() { store.set(S) }
 function go(patch) { Object.assign(S, patch); save(); render() }
 
 function header() {
-  return `<header class="top"><div><div class="eyebrow">Fashion Data Science · Weeks 1–3</div><h1>Fashion Data <span>Quiz</span></h1></div>
+  return `<header class="top"><div><div class="eyebrow">Fashion Data Science · Weeks 1–4</div><h1>Fashion Data <span>Quiz</span></h1></div>
   ${S.view !== "start" ? `<button class="ghost" id="home">Back to start</button>` : `<div class="muted">For the projector or for review at home</div>`}</header>`;
 }
 
@@ -980,6 +980,7 @@ function startView() {
     <div class="row"><button class="primary" data-start="${k}" data-mode="present">Present to the class</button><button data-start="${k}" data-mode="solo">Play on my phone</button></div>
     ${z.poll ? "" : `<button class="ghost small" data-start="${k}" data-mode="team">Or play as teams with a scoreboard</button>`}</section>`).join("");
   return `${header()}
+  <section class="quizcard" style="margin-bottom:16px"><div class="eyebrow">Final project · due 18 November 2026</div><h2>Brand Manager Decision Lab</h2><p class="muted" style="margin:0">The brief and your brand's dataset. You need the password from the class chat.</p><div class="row"><a class="primary" href="project.html" style="display:inline-block;padding:.6em 1.1em;border-radius:6px;background:var(--plum,#43123F);color:#fff;text-decoration:none">Open the project page</a></div></section>
   <div class="choices">${cards}</div>
   <div class="modes">
     <div class="mode"><h3>Present to the class</h3><p class="muted" style="margin:0">Put this page on the projector or share your screen. You show one question at a time and reveal the answer when everyone is ready.</p></div>

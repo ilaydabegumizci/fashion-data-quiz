@@ -1,0 +1,157 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Final Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@500;700;800&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #FCFAFA; --surface: #FFFFFF; --sunk: #F0EAEA; --line: #D9CFD2;
+  --fg: #1D1D1B; --muted: #61615C;
+  --plum: #43123F; --mag: #7E0950; --lime: #C4C600; --orange: #EC940C; --red: #AF1E0B;
+  --ok: #2F7D3B; --ok-bg: #E4F2E4; --bad: #AF1E0B; --bad-bg: #F8E3DF;
+  --on-plum: #FFFFFF; --on-lime: #1D1D1B;
+  --display: "Tomorrow", "Arial Narrow", system-ui, sans-serif;
+  --body: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #171014; --surface: #22181E; --sunk: #2D2128; --line: #47353F;
+  --fg: #F3ECEF; --muted: #B8A9B1;
+  --plum: #C98BC3; --mag: #E37BB5; --lime: #D6D84A; --orange: #F2AA3B; --red: #F07A66;
+  --ok: #7BCB86; --ok-bg: #1E3322; --bad: #F07A66; --bad-bg: #3B1E1A;
+  --on-plum: #171014; --on-lime: #171014; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #171014; --surface: #22181E; --sunk: #2D2128; --line: #47353F;
+  --fg: #F3ECEF; --muted: #B8A9B1;
+  --plum: #C98BC3; --mag: #E37BB5; --lime: #D6D84A; --orange: #F2AA3B; --red: #F07A66;
+  --ok: #7BCB86; --ok-bg: #1E3322; --bad: #F07A66; --bad-bg: #3B1E1A;
+  --on-plum: #171014; --on-lime: #171014; color-scheme: dark }
+
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.5; padding-inline: 16px; padding-block: 20px 40px; margin: 0 }
+.wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 22px }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.15; text-wrap: balance }
+a { color: var(--mag) }
+.eyebrow { font-family: var(--display); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mag); font-weight: 700 }
+.muted { color: var(--muted) }
+header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px; border-bottom: 2px solid var(--fg); padding-bottom: 12px }
+header.top h1 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 800 }
+header.top h1 span { color: var(--mag) }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px }
+.fact { background: var(--sunk); border-radius: 8px; padding: 14px 16px }
+.fact b { display: block; font-family: var(--display); font-size: 1.3rem; color: var(--plum) }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 12px; min-width: 0 }
+.routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px }
+.route { border-radius: 8px; padding: 16px 18px; background: var(--sunk) }
+.route h3 { font-size: 1.05rem; margin-bottom: 6px }
+.unlock { display: flex; flex-wrap: wrap; gap: 10px; align-items: end }
+.unlock label { display: grid; gap: 4px; font-weight: 600; flex: 1 1 240px }
+input { font: inherit; padding: .6em .8em; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--fg); width: 100% }
+button { font: inherit; cursor: pointer; border-radius: 6px; border: 1px solid var(--plum); background: var(--plum); color: var(--on-plum); padding: .6em 1.1em; font-weight: 600 }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px }
+button:disabled { opacity: .45; cursor: default }
+.msg { min-height: 1.5em; font-weight: 600 }
+.msg.bad { color: var(--bad) } .msg.ok { color: var(--ok) }
+.files { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px }
+.file { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; align-content: space-between; background: var(--surface) }
+.file h3 { font-size: 1rem; text-transform: capitalize }
+.file p { margin: 0; font-size: .9rem }
+.file .meta { font-size: .8rem; color: var(--muted) }
+ol.qs { margin: 0; padding-left: 1.4em; display: grid; gap: 6px }
+ol.qs li span { color: var(--muted) }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px }
+.locked .file button { opacity: .45 }
+footer { font-size: .85rem; color: var(--muted) }
+</style></head><body><main class="wrap">
+<header class="top"><div><div class="eyebrow">Fashion Data Science · 2026–2027</div><h1>Final project: <span>Brand Manager Decision Lab</span></h1></div><a href="./">← Quizzes</a></header>
+
+<section class="facts">
+  <div class="fact"><b>18 November 2026</b>Deadline: executive deck as PDF</div>
+  <div class="fact"><b>Week 6</b>You present to the “brand board”</div>
+  <div class="fact"><b>Individual</b>100% of the module grade</div>
+  <div class="fact"><b>2 parts</b>12-question diagnosis + AI campaign concept</div>
+</section>
+
+<section class="card">
+  <h2>Choose your route</h2>
+  <div class="routes">
+    <div class="route"><h3>Route 1 · Build it yourself</h3>Make your own pivot tables and charts from the Raw Data sheet, with the Week 3 lab guide and the “In Google Sheets” lines in the brief.</div>
+    <div class="route"><h3>Route 2 · Use the ready tables</h3>Each dataset has 12 extra sheets, “Q1 ready” to “Q12 ready”, with the tables and a chart for each question. Focus on reading the numbers and deciding.</div>
+  </div>
+  <p style="margin:0"><b>Both routes are graded the same way:</b> on your interpretation of the numbers and on the decisions you recommend. Choosing Route 2 costs you nothing.</p>
+</section>
+
+<section class="card" id="dl">
+  <h2>Datasets and brief</h2>
+  <p class="muted" style="margin:0">The files are protected. Type the password from class; the files are unlocked in your browser.</p>
+  <form class="unlock" id="f"><label>Password<input id="pw" type="password" autocomplete="off"></label><button type="submit">Unlock</button></form>
+  <div class="msg" id="msg" role="status" aria-live="polite"></div>
+  <div class="files locked" id="files"></div>
+</section>
+
+<section class="card">
+  <h2>The 12 questions (Part 1)</h2>
+  <ol class="qs">
+    <li>Revenue vs quantity <span>· are we truly expanding?</span></li>
+    <li>Structural change <span>· what changed between 2024 and 2025?</span></li>
+    <li>Volume vs value <span>· more units, or smarter selling?</span></li>
+    <li>Strategic categories <span>· which three deserve investment?</span></li>
+    <li>Hidden strategic categories <span>· weak in numbers, but essential?</span></li>
+    <li>SKU pricing logic <span>· popular, or simply expensive?</span></li>
+    <li>Portfolio concentration <span>· focused, or dangerously dependent?</span></li>
+    <li>Discount performance <span>· do discounts help our economics?</span></li>
+    <li>Real growth from discounts? <span>· extra revenue, or shifted volume?</span></li>
+    <li>Campaign impact <span>· extra sales, or demand that was there anyway?</span></li>
+    <li>Channel concentration <span>· where is the value, are we overexposed?</span></li>
+    <li>Seasonality <span>· are low months a weakness or by design?</span></li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>Before you submit</h2>
+  <ul>
+    <li>Every answer slide: an insight headline with a number, one chart, the key number, a “so what” and a next step.</li>
+    <li>One axis per chart, bars from zero, units labelled.</li>
+    <li>Part 2 answers one Part 1 finding (name the question and the number).</li>
+    <li>Appendix: prompt log for every AI visual, AI-use disclosure slide, sources.</li>
+    <li>No likeness of real people, no copied campaigns or logos; real brand = “student concept”.</li>
+  </ul>
+</section>
+<footer>The datasets are simulated for teaching. Please do not share the password outside the class.</footer>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let FILES = [], KEYPW = null;
+fetch("project-files/manifest.json").then((r) => r.json()).then((m) => { FILES = m; render(); });
+function render() {
+  $("files").innerHTML = FILES.map((f, i) => `<div class="file"><div><h3>${f.model ? f.model : "Project brief (PDF)"}</h3>${f.about ? `<p>${f.about}</p>` : `<p>The full brief: questions, required evidence and grading.</p>`}</div><div class="meta">${f.rows ? f.rows.toLocaleString("en-US") + " order lines · " : ""}${f.name} · ${f.kb} KB</div><button data-i="${i}" ${KEYPW ? "" : "disabled"}>Download</button></div>`).join("");
+  $("files").classList.toggle("locked", !KEYPW);
+  document.querySelectorAll("#files button").forEach((b) => b.onclick = () => get(FILES[b.dataset.i], b));
+}
+async function decrypt(buf, pw) {
+  const salt = buf.slice(0, 16), iv = buf.slice(16, 28), ct = buf.slice(28);
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 250000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  return crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ct);
+}
+$("f").onsubmit = async (e) => {
+  e.preventDefault(); const pw = $("pw").value.trim(); if (!pw) return;
+  $("msg").className = "msg"; $("msg").textContent = "Checking…";
+  try {
+    const small = FILES.reduce((a, b) => (a.kb <= b.kb ? a : b));
+    const buf = await (await fetch("project-files/" + small.file)).arrayBuffer();
+    await decrypt(buf, pw);
+    KEYPW = pw; $("msg").className = "msg ok"; $("msg").textContent = "Unlocked. Choose a file."; render();
+  } catch (err) { $("msg").className = "msg bad"; $("msg").textContent = "That password does not work. Check capital letters and dashes."; }
+};
+async function get(f, b) {
+  const t = b.textContent; b.disabled = true; b.textContent = "Unlocking…";
+  try {
+    const buf = await (await fetch("project-files/" + f.file)).arrayBuffer();
+    const plain = await decrypt(buf, KEYPW);
+    const type = f.name.endsWith(".pdf") ? "application/pdf" : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([plain], { type })); a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+    b.textContent = "Downloaded ✓";
+  } catch (err) { b.textContent = "Try again"; }
+  setTimeout(() => { b.disabled = false; b.textContent = t; }, 2500);
+}
+</script></body></html>
