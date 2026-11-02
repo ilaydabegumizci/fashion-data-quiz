@@ -60,6 +60,17 @@ ol.qs { margin: 0; padding-left: 1.4em; display: grid; gap: 6px }
 ol.qs li span { color: var(--muted) }
 ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px }
 .locked .file button { opacity: .45 }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px }
+.tbl table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .95rem }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line) }
+.tbl th { background: var(--sunk); font-family: var(--display); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase }
+.tbl tr:last-child td { border-bottom: 0 }
+.tbl td:first-child { font-weight: 700; width: 22% }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px }
+.ex { border-radius: 8px; padding: 16px 18px; background: var(--sunk); display: grid; gap: 8px; min-width: 0; align-content: start }
+.ex h3 { font-size: 1.05rem }
+.ex.weak h3 { color: var(--bad) } .ex.strong h3 { color: var(--ok) }
+.ex dl { margin: 0; display: grid; gap: 6px } .ex dt { font-weight: 700 } .ex dd { margin: 0 }
 footer { font-size: .85rem; color: var(--muted) }
 </style></head><body><main class="wrap">
 <header class="top"><div><div class="eyebrow">Fashion Data Science · 2026–2027</div><h1>Final project: <span>Brand Manager Decision Lab</span></h1></div><a href="./">← Quizzes</a></header>
@@ -104,13 +115,90 @@ footer { font-size: .85rem; color: var(--muted) }
 </section>
 
 <section class="card">
-  <h2>Before you submit</h2>
+  <h2>What you hand in</h2>
   <ul>
-    <li>Every answer slide: an insight headline with a number, one chart, the key number, a “so what” and a next step.</li>
-    <li>One axis per chart, bars from zero, units labelled.</li>
-    <li>Part 2 answers one Part 1 finding (name the question and the number).</li>
+    <li><b>Part 1, diagnosis:</b> one answer for each of the 9 questions (one or two slides for Q2, Q4 and Q7).</li>
+    <li><b>Part 2, AI campaign:</b> a campaign that answers ONE Part 1 finding. It must include a <b>chain slide</b>: your finding (question and number) → the campaign objective → one KPI you would track. Plus target audience, key message, visual direction and channels.</li>
+    <li><b>Appendix:</b> extra tables and calculations, sources, the prompt log for every AI visual, and an AI-use disclosure slide.</li>
+    <li><b>Length:</b> about 15–20 main slides. A busy executive must be able to follow it.</li>
+    <li><b>File:</b> one PDF named <b>Surname_Brand.pdf</b>, uploaded to <b>Final Project on Moodle</b> by <b>18 November 2026</b>.</li>
+    <li><b>Week 6:</b> you present to the “brand board”. Speak in your own words, do not read; you will get one or two questions about your choices.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>What we want, and what we don't</h2>
+  <p class="muted" style="margin:0">These are illustrations, not a template. Design your own slides and tell your brand's story in your own way.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>We want</th><th>We don't want</th></tr></thead>
+    <tbody>
+      <tr><td>Headline</td><td>The insight with a number: “Discounts lift units by 30% but cost us 25% per unit”.</td><td>A topic label: “Discount performance”.</td></tr>
+      <tr><td>Evidence</td><td>One chart you chose for the question, with the insight as its title. One axis, bars from zero.</td><td>A screenshot of a pivot table or of a ready sheet. Two y-axes. Pie charts for trends.</td></tr>
+      <tr><td>Interpretation</td><td>What the number means for YOUR brand model. The same number can be good news for fast fashion and a warning for luxury.</td><td>A sentence that could fit any brand, or a description of the chart (“revenue went up”).</td></tr>
+      <tr><td>Numbers</td><td>Every number from your own dataset, with its source under the chart: “Source: Q7a ready” or “Source: own pivot”.</td><td>Numbers you cannot explain, metrics we did not cover in class, numbers that contradict each other between slides.</td></tr>
+      <tr><td>Length</td><td>About 15–20 main slides; the rest in the appendix.</td><td>A 40-page report, or 4 slides with no evidence.</td></tr>
+      <tr><td>Part 2</td><td>A campaign that answers one Part 1 finding, with your own visual direction.</td><td>A moodboard with no link to Part 1. Real people's faces (celebrities, influencers, models).</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card">
+  <h2>Example: one question, two answers</h2>
+  <p class="muted" style="margin:0">A made-up brand, Q7a (discount performance). The numbers are invented and do not come from any of the 8 datasets.</p>
+  <div class="two">
+    <div class="ex weak"><h3>Weak answer</h3>
+      <p style="margin:0">Title “Q7. Discount Performance”, a screenshot of the pivot table, and: “Discounted lines have an average quantity of 1.31 and full-price lines 1.01. Revenue per unit is 30 vs 40. Discounts weaken performance.”</p>
+      <p class="muted" style="margin:0">The numbers are right, but nothing tells the board what they mean or what to do.</p></div>
+    <div class="ex strong"><h3>Strong answer</h3>
+      <dl>
+        <dt>Headline</dt><dd>Discounts sell 30% more units, but we earn 25% less on each one.</dd>
+        <dt>Chart</dt><dd>Revenue per unit, full price vs discounted, bars from zero.</dd>
+        <dt>Key number</dt><dd>−25% revenue per unit (revenue / quantity).</dd>
+        <dt>So what</dt><dd>For a premium brand we are buying volume with margin, and 1 in 4 lines is now discounted.</dd>
+        <dt>Next step</dt><dd>Cap discounts at 20% and test a gift with purchase in Q4.</dd>
+        <dt>Source</dt><dd>Q7a ready.</dd>
+      </dl></div>
+  </div>
+  <p style="margin:0">Another student could reach a different conclusion from the same numbers, for example that discounts clear old stock without hurting a fast-fashion brand. That can also be a strong answer, if it is argued from the brand model.</p>
+</section>
+
+<section class="card">
+  <h2>Using AI: allowed, but show your thinking</h2>
+  <ul>
+    <li><b>Allowed:</b> AI for ideas, wording, checking a formula, and for the Part 2 visuals.</li>
+    <li><b>Check every number:</b> each number must come from your dataset, with its source under the chart.</li>
+    <li><b>Edit what AI writes:</b> placeholders such as “[Chart: …]”, formula code, metrics we did not cover in class, or text addressed to “your brand” cost points under Professionalism.</li>
+    <li><b>Another reading:</b> on at least one Part 1 slide, add a short note on an interpretation you considered and why you rejected it. This is where we see your own thinking.</li>
+    <li><b>Present, don't read:</b> in Week 6 you speak in your own words and answer one or two questions about your choices.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>How it is graded</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Criterion</th><th>Strong</th><th>Weak</th></tr></thead>
+    <tbody>
+      <tr><td>Analysis &amp; interpretation · 30%</td><td>Says what each number means for this brand model and what to do; compares with a baseline; keeps correlation apart from cause.</td><td>Describes the chart; sentences that fit any brand; numbers that contradict each other.</td></tr>
+      <tr><td>Subject knowledge · 20%</td><td>Metrics used as defined in the brief (AOV = revenue / order lines); the right metric for each question.</td><td>Wrong definitions; metrics not explained or not from the course.</td></tr>
+      <tr><td>Creativity &amp; technical · 20%</td><td>The right chart per question, honest axes, insight titles; Part 2 visuals original and consistent with the finding.</td><td>Pivot screenshots, pies for trends, two y-axes; a moodboard unrelated to Part 1; real people's faces.</td></tr>
+      <tr><td>Research &amp; problem-solving · 10%</td><td>Brand and market context beyond the dataset; sources named; each question framed as a decision.</td><td>No context beyond the numbers; no sources.</td></tr>
+      <tr><td>Written &amp; visual · 10%</td><td>One message per slide; about 15–20 readable slides.</td><td>Walls of text; a 40-page report.</td></tr>
+      <tr><td>Professionalism · 10%</td><td>Sources and prompt log in the appendix; AI-use disclosure; edited text; presented in your own words, on time.</td><td>AI placeholders left in; no prompt log; reading from the slides; late.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card">
+  <h2>Before you submit: checklist</h2>
+  <ul>
+    <li>Every answer slide: an insight headline with a number, one chart, the key number, a “so what”, a next step and a source line.</li>
+    <li>One axis per chart, bars from zero, units labelled. No pivot screenshots on the main slides.</li>
+    <li>At least one “another reading” note in Part 1.</li>
+    <li>Part 2 starts from one Part 1 finding (chain slide: finding → objective → KPI).</li>
     <li>Appendix: prompt log for every AI visual, AI-use disclosure slide, sources.</li>
-    <li>No likeness of real people, no copied campaigns or logos; real brand = “student concept”.</li>
+    <li>No likeness of real people, no copied campaigns or logos; a real brand is labelled “student concept”.</li>
+    <li>I read every sentence AI wrote for me, and I can explain every number.</li>
+    <li>PDF named Surname_Brand.pdf, on Moodle by 18 November.</li>
   </ul>
 </section>
 <footer>The datasets are simulated for teaching. Please do not share the password outside the class.</footer>
