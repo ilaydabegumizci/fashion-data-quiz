@@ -56,6 +56,15 @@ button:disabled { opacity: .45; cursor: default }
 .file h3 { font-size: 1rem; text-transform: capitalize }
 .file p { margin: 0; font-size: .9rem }
 .file .meta { font-size: .8rem; color: var(--muted) }
+details.q { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); margin: 0 0 8px }
+details.q summary { cursor: pointer; padding: 12px 14px; font-weight: 600; list-style-position: inside }
+details.q[open] summary { border-bottom: 1px solid var(--line) }
+details.q .qb { padding: 6px 16px 12px }
+details.q .qb p, details.q .qb li { margin: .45em 0 }
+details.q h4 { margin: 14px 0 4px; color: var(--mag); font-size: 1rem }
+details.q .ready { display: inline-block; background: var(--sunk); border-radius: 999px; padding: 2px 10px; font-size: .9rem; margin-top: 8px }
+details.q .gs { color: var(--muted); font-size: .93rem; border-left: 3px solid var(--line); padding-left: 10px }
+.grp { display: block; font-family: var(--display); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 14px 0 6px }
 ol.qs { margin: 0; padding-left: 1.4em; display: grid; gap: 6px }
 ol.qs li span { color: var(--muted) }
 ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px }
@@ -101,17 +110,208 @@ footer { font-size: .85rem; color: var(--muted) }
 
 <section class="card">
   <h2>The 9 questions (Part 1)</h2>
-  <ol class="qs">
-    <li>Revenue vs quantity <span>· are we truly expanding?</span></li>
-    <li>Structural change and seasonality <span>· what changed in 2025, and are low months a weakness?</span></li>
-    <li>Volume vs value <span>· more units, or smarter selling?</span></li>
-    <li>Strategic and hidden categories <span>· which three deserve investment, and which can we not lose?</span></li>
-    <li>SKU pricing logic <span>· popular, or simply expensive?</span></li>
-    <li>Portfolio concentration <span>· focused, or dangerously dependent?</span></li>
-    <li>Discounts <span>· do they help our economics, or only shift volume?</span></li>
-    <li>Campaign impact <span>· extra sales, or demand that was there anyway?</span></li>
-    <li>Channel concentration <span>· where is the value, are we overexposed?</span></li>
-  </ol>
+  <p class="muted" style="margin:0 0 10px">Tap a question to see exactly what to find out, the evidence you need, and how to get it on each route.</p>
+<span class="grp">Overall Brand Health</span><details class="q"><summary><b>Q1.</b> Revenue vs Quantity Health</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q1 ready”</p>
+<p><b>Executive Question:</b> Are we truly expanding, or are headline numbers hiding saturation?</p>
+<p><b>You must determine:</b></p>
+<ul>
+<li>Is the brand expanding, stabilising, or approaching saturation?</li>
+<li>Are revenue and quantity aligned, or moving apart?</li>
+</ul>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Monthly revenue and quantity (January 2024 to December 2025) on ONE axis as two index lines (index = month value / January 2024 value x 100). Or: two charts one above the other, with the same months.</li>
+<li>Total change 2024 vs 2025 for revenue and for quantity (YoY %).</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with year and month in Rows, SUM of revenue_eur and SUM of quantity in Values (untick “Show totals”). Copy the values to a new tab, add the index columns (=B2/$B$2*100) and make a line chart.</p>
+<p><b>Interpretation rule:</b> flat quantity + rising revenue does NOT automatically mean decline. Explain what the pattern actually means for your brand model.</p>
+</div></details>
+<details class="q"><summary><b>Q2.</b> Structural Change and Seasonality (2024 vs 2025)</summary><div class="qb">
+<p class="ready">Route 2: ready sheets “Q2a ready” and “Q2b ready”</p>
+<p><b>Executive Question:</b> What fundamentally changed between 2024 and 2025, and are our low months a weakness or part of our design?</p>
+<h4>Part a: structural change</h4>
+<p>You must decide whether performance shows: structural improvement, structural deterioration, or simple seasonal noise.</p>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Overlay line chart: 2024 and 2025 monthly revenue as two lines on the same January to December axis.</li>
+<li>YoY revenue growth (%) for the full year and for each month (2025 month / same month in 2024 - 1).</li>
+<li>Share of months with positive YoY (for example 8 of 12 months = 67%).</li>
+<li>Volatility of monthly revenue for each year: CV = STDEV / AVERAGE.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with month in Rows, year in Columns, SUM of revenue_eur in Values. In a new column, YoY =C2/B2-1. Then =COUNTIF(range,&quot;&gt;0&quot;)/12 on the YoY column, and =STDEV(range)/AVERAGE(range) on each year column.</p>
+<p>Your conclusion must separate a trend shift from fluctuation. State clearly whether 2025 is a new structural baseline or a temporary spike.</p>
+<h4>Part b: seasonality</h4>
+<p><b>Identify:</b> one expected and one unexpected seasonal pattern.</p>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Use the 2024 vs 2025 overlay chart from part a.</li>
+<li>Amplitude for each year = peak month revenue / lowest month revenue - 1 (%).</li>
+<li>Peak and lowest month in each year: are they the same in both years?</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> use the month x year pivot from part a; =MAX(range)/MIN(range)-1 on each year column; line chart.</p>
+<p>Then explain whether the low months are a strategic issue, or an acceptable feature of the brand model (for example scarcity, drop culture, production cycles).</p>
+</div></details>
+<details class="q"><summary><b>Q3.</b> Volume vs Value Growth</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q3 ready”</p>
+<p><b>Executive Question:</b> Are we growing because we sell more units, or because we sell smarter?</p>
+<p>You must determine whether growth is driven by: quantity (volume expansion), or AOV, revenue per unit, pricing and mix (value expansion).</p>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>AOV trend chart by month (AOV = revenue / number of order lines).</li>
+<li>Table for 2024 and 2025: revenue, quantity, order lines, AOV and revenue per unit, each with YoY %.</li>
+<li>Decomposition: revenue growth = (1 + quantity growth) x (1 + revenue-per-unit growth) - 1. Say which of the two parts is bigger.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with year in Columns; calculated field AOV = SUM(revenue_eur)/COUNTA(order_id); line chart for the monthly AOV.</p>
+<p>Explain why this growth pattern is strategically right, or dangerous, for your brand type (for example luxury vs fast fashion vs sustainable). If volume and value move in opposite directions, explain why this is logical for your brand model.</p>
+</div></details>
+<span class="grp">Product Strategy</span><details class="q"><summary><b>Q4.</b> Strategic and Hidden Categories</summary><div class="qb">
+<p class="ready">Route 2: ready sheets “Q4a ready” and “Q4b ready”</p>
+<p><b>Executive Question:</b> Which three categories deserve investment next season, and is there a weak-looking category we cannot afford to lose?</p>
+<h4>Part a: strategic categories</h4>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Revenue share by category (%), 2024 and 2025.</li>
+<li>Category YoY revenue growth (%).</li>
+<li>One consistency metric per category: CV of monthly revenue (lower = steadier) or the number of months with positive YoY.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with category in Rows, year in Columns, SUM of revenue_eur, “Show as % of column”; bar chart sorted from largest to smallest. Optional: scatter chart of share (x) vs YoY growth (y).</p>
+<p><b>Reminder:</b> strategic does not mean biggest only. Look for stable contributors, resilient categories or emerging growth engines. Justify each of your three choices beyond size alone.</p>
+<h4>Part b: a hidden strategic category</h4>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Revenue share (%) of this category.</li>
+<li>Its monthly revenue trend chart (January 2024 to December 2025).</li>
+<li>One more number that shows its role, for example its AOV, YoY growth or return rate compared with the brand average.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with year and month in Rows, category in Columns, SUM of revenue_eur; line chart of this category.</p>
+<p>Then justify with brand logic (for example entry-price tier, halo product, image carrier, seasonal anchor).</p>
+</div></details>
+<details class="q"><summary><b>Q5.</b> SKU Pricing Logic</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q5 ready”</p>
+<p><b>Executive Question:</b> Are our top products popular, or simply expensive?</p>
+<p><b>You must analyse:</b> which SKUs generate the most revenue, and whether the same SKUs also sell the most units.</p>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Scatter chart: one dot per SKU, x = total quantity, y = total revenue (EUR).</li>
+<li>How many of the top 5 SKUs by revenue are also in the top 5 by quantity (for example 2 of 5).</li>
+<li>Revenue per unit of the top 5 SKUs by revenue vs the brand average revenue per unit.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with sku in Rows, SUM of quantity and SUM of revenue_eur in Values, sorted by revenue; scatter chart.</p>
+<p>Explain whether performance is volume-driven or price-driven, and what this means for positioning and pricing power.</p>
+</div></details>
+<details class="q"><summary><b>Q6.</b> Portfolio Concentration</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q6 ready”</p>
+<p><b>Executive Question:</b> Are we strategically focused, or dangerously dependent?</p>
+<p>You must assess SKU concentration. Explain whether it reflects: an intentional hero-product strategy, or a structural concentration risk.</p>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Pareto chart: SKUs sorted by revenue (largest first), shown as a cumulative % line chart with a 70% reference line.</li>
+<li>Number and % of SKUs that make 70% of revenue (for example 12 of 40 SKUs = 30%).</li>
+<li>Revenue share of the top 3 SKUs (%).</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> paste the sorted SKU revenue list as values in a new tab; cumulative % =SUM($B$2:B2)/SUM($B$2:$B$100); add a column with 70% in every row and plot both as lines.</p>
+<p><b>Elimination logic:</b> if you must discontinue 20% of SKUs, name the numbers you use and the cut-off for each, for example revenue share, YoY growth, return rate (from return_flag) and campaign reliance (share of SKU revenue from campaign_flag = Yes). Show your shortlist in a table.</p>
+</div></details>
+<span class="grp">Pricing &amp; Discounting</span><details class="q"><summary><b>Q7.</b> Discounts: Performance and Real Growth</summary><div class="qb">
+<p class="ready">Route 2: ready sheets “Q7a ready” and “Q7b ready”</p>
+<p><b>Executive Question:</b> Are discounts strengthening our economics and creating real growth, or merely shifting volume?</p>
+<h4>Part a: discount performance</h4>
+<p><b>Compare</b> discounted lines (discount_flag = Yes) with full-price lines (discount_flag = No):</p>
+<ul>
+<li>Average quantity per order line</li>
+<li>AOV (revenue / order lines)</li>
+<li>Revenue per unit (revenue / quantity)</li>
+<li>Return rate (%)</li>
+</ul>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Grouped column chart: discounted vs full price.</li>
+<li>% difference for each metric = discounted / full price - 1.</li>
+<li>Share of order lines and share of revenue that are discounted (%).</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with discount_flag in Columns; AVERAGE of quantity, calculated field AOV, SUM of revenue_eur and SUM of quantity. For the return rate: return_flag in Rows, COUNTA of order_id, “Show as % of column”.</p>
+<p>One metric alone is not enough: show how quantity, AOV and revenue per unit move together. Remember that revenue_eur already includes the discount.</p>
+<h4>Part b: do discounts create real growth?</h4>
+<p><b>You must analyse:</b></p>
+<ul>
+<li>Quantity uplift (%) at each discount level (discount_pct) compared with full price</li>
+<li>Revenue change (%) 2024 vs 2025 for full-price lines and for discounted lines</li>
+</ul>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Column chart of revenue YoY %: full-price vs discounted lines.</li>
+<li>Table by discount_pct: order lines, average quantity, revenue per unit.</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with discount_pct in Rows, COUNTA of order_id, AVERAGE of quantity, SUM of revenue_eur and SUM of quantity; second pivot with discount_flag in Rows and year in Columns.</p>
+<p>Then conclude clearly: is growth sustainable without price pressure? Your conclusion must fit your brand positioning and long-term value logic.</p>
+</div></details>
+<span class="grp">Marketing &amp; Campaign Effectiveness</span><details class="q"><summary><b>Q8.</b> Campaign Impact</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q8 ready”</p>
+<p><b>Executive Question:</b> Are campaigns driving incremental performance, or amplifying baseline demand?</p>
+<p>Use non-campaign lines (campaign_flag = No) as your baseline and compare:</p>
+<ul>
+<li>Campaign revenue share (%) of total revenue, for each year</li>
+<li>Campaign vs non-campaign AOV and revenue per unit (% difference)</li>
+<li>Campaign revenue split by channel and by category (%), next to the same split for non-campaign revenue</li>
+</ul>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Stacked column chart: monthly revenue split into campaign and non-campaign.</li>
+<li>At least one KPI with a number (for example AOV difference, campaign share).</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with campaign_flag in Columns, clean channel (then category) in Rows, SUM of revenue_eur, “Show as % of column”; calculated field AOV.</p>
+<p>Your answer must go beyond averages: say in which channels or categories campaigns create value. If the discount uplift disappears outside campaigns, classify that growth as dependency-driven.</p>
+<p><b>Correlation is not causation:</b> campaigns often run in months that are strong anyway (for example holidays). A higher number during a campaign does not prove that the campaign caused it. Check the non-campaign revenue in the same months, and say what your data can and cannot prove.</p>
+</div></details>
+<span class="grp">Channel Strategy</span><details class="q"><summary><b>Q9.</b> Channel Concentration</summary><div class="qb">
+<p class="ready">Route 2: ready sheet “Q9 ready”</p>
+<p><b>Executive Question:</b> Where do we truly generate value, and are we overexposed?</p>
+<p><b>You must identify</b> (with the clean channel column):</p>
+<ul>
+<li>Leading sales channel</li>
+<li>Its revenue share (%) = your concentration metric (share of the top channel)</li>
+</ul>
+<p><b>Required evidence:</b></p>
+<ul>
+<li>Revenue share of every channel, 2024 vs 2025 (%).</li>
+<li>AOV and return rate by channel.</li>
+<li>Simple stress test: if the top channel loses 10% of its revenue, total revenue falls by (top channel share x 10%).</li>
+</ul>
+<p class="gs"><b>Route 1, in Google Sheets:</b> pivot with the clean channel in Rows, year in Columns, SUM of revenue_eur, “Show as % of column”; bar or 100% stacked bar chart.</p>
+<p>Then assess: is this channel dominance strategic leverage, or structural risk? Support your conclusion with dependency logic.</p>
+</div></details>
+  <h2 style="margin-top:22px">The campaign (Part 2)</h2>
+<details class="q"><summary><b>Part 2.</b> AI-driven campaign concept</summary><div class="qb">
+<p>In Part 2 you turn your data diagnosis into creative strategy. You design an AI-supported marketing campaign that is fully consistent with your findings from Part 1. The campaign must solve a problem diagnosed in Part 1.</p>
+<h4>Your Task</h4>
+<p><b>1.</b> Identify one key strategic insight from Part 1. Name the question (Q1-Q9) and the number behind it. For example:</p>
+<ul>
+<li>Growth is value-driven, not volume-driven</li>
+<li>Discounts hurt brand value</li>
+<li>One category is under-leveraged</li>
+<li>Campaigns work only in specific channels</li>
+</ul>
+<p><b>2.</b> Design a marketing campaign concept that directly responds to this insight.</p>
+<p><b>3.</b> Use AI visual tools (for example image generation, moodboards, campaign visuals) to express this strategy.</p>
+<h4>Campaign Proposal Should Include</h4>
+<ul>
+<li>Chain slide (required): your Part 1 finding (question and number) → the campaign objective → one KPI you would track with the same kind of data.</li>
+<li>Campaign objective: what problem it solves</li>
+<li>Target audience</li>
+<li>Key message (what you want people to believe)</li>
+<li>Visual direction (mood, tone, aesthetic)</li>
+<li>Channel focus (where this campaign lives)</li>
+</ul>
+<h4>AI use, transparency and brand safety</h4>
+<ul>
+<li>Prompt log (appendix): for each AI visual, the tool, the prompt(s) you used, and what you changed between tries.</li>
+<li>AI-use disclosure slide: which AI tools you used, for what (visuals, text, analysis), and what you did yourself.</li>
+<li>Brand safety: do not use the likeness of real people (celebrities, influencers, models). Do not copy or recreate real campaigns, logos or artworks. If you chose a real brand, say clearly that the visuals are a student concept.</li>
+</ul>
+<h4>Example</h4>
+<p>If your diagnosis shows that discounts increase volume but destroy value, your campaign might focus on craftsmanship, longevity, cost-per-wear and emotional durability instead of price.</p>
+</div></details>
 </section>
 
 <section class="card">
